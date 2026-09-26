@@ -2,49 +2,49 @@ import type { AlertLevel, Priority, RiskLevel, ShelfStatus, Tone } from './types
 
 /** Solid fill + the text colour that stays legible on it. */
 export const TONE_BG: Record<Tone, string> = {
-  ink: 'bg-ink text-paper',
-  blue: 'bg-blue text-white',
+  ink: 'bg-ink text-cream',
+  blue: 'bg-sky text-cream',
   lime: 'bg-lime text-ink',
-  yellow: 'bg-yellow text-ink',
-  coral: 'bg-coral text-ink',
-  purple: 'bg-purple text-white',
+  yellow: 'bg-amber text-ink',
+  coral: 'bg-coral text-cream',
+  purple: 'bg-magenta text-cream',
 };
 
 export const TONE_SOLID: Record<Tone, string> = {
   ink: 'bg-ink',
-  blue: 'bg-blue',
+  blue: 'bg-sky',
   lime: 'bg-lime',
-  yellow: 'bg-yellow',
+  yellow: 'bg-amber',
   coral: 'bg-coral',
-  purple: 'bg-purple',
+  purple: 'bg-magenta',
 };
 
 export const TONE_TEXT: Record<Tone, string> = {
   ink: 'text-ink',
-  blue: 'text-blue',
+  blue: 'text-sky',
   lime: 'text-lime',
-  yellow: 'text-yellow',
+  yellow: 'text-amber-800',
   coral: 'text-coral',
-  purple: 'text-purple',
+  purple: 'text-magenta',
 };
 
 export const TONE_BORDER: Record<Tone, string> = {
   ink: 'border-ink',
-  blue: 'border-blue',
+  blue: 'border-sky',
   lime: 'border-lime',
-  yellow: 'border-yellow',
+  yellow: 'border-amber',
   coral: 'border-coral',
-  purple: 'border-purple',
+  purple: 'border-magenta',
 };
 
-/** Soft tint used behind text blocks. Kept low-opacity so it never reads as glass. */
+/** Soft tint used behind text blocks. */
 export const TONE_WASH: Record<Tone, string> = {
   ink: 'bg-ink/10',
-  blue: 'bg-blue/15',
-  lime: 'bg-lime/25',
-  yellow: 'bg-yellow/25',
+  blue: 'bg-sky/20',
+  lime: 'bg-lime/30',
+  yellow: 'bg-amber/25',
   coral: 'bg-coral/20',
-  purple: 'bg-purple/15',
+  purple: 'bg-magenta/20',
 };
 
 export const LEVEL_TONE: Record<AlertLevel, Tone> = {
@@ -95,10 +95,7 @@ export const CAMERA_TONE = {
 } as const;
 
 /* ============================================================
-   CHART PALETTE
-   Recharts writes SVG presentation attributes, which cannot resolve
-   `var()`. So chart internals get literal hex values, kept in step with
-   the CSS tokens in index.css.
+   CHART PALETTE (Matching SIH26008 OKLCH-aligned Hex)
    ============================================================ */
 export interface ChartPalette {
   ink: string;
@@ -113,18 +110,17 @@ export interface ChartPalette {
 }
 
 export const CHART_PALETTE: ChartPalette = {
-  ink: '#111111',
-  paper: '#F5F1E8',
-  surface: '#FFFFFF',
-  muted: '#686868',
-  blue: '#2563EB',
-  lime: '#A3E635',
-  yellow: '#FACC15',
-  coral: '#FF5A5F',
-  purple: '#8B5CF6',
+  ink: '#18181b',
+  paper: '#ffffff',
+  surface: '#ffffff',
+  muted: '#71717a',
+  blue: '#0284c7',
+  lime: '#bef264',
+  yellow: '#ffcc4e',
+  coral: '#e11d48',
+  purple: '#d946ef',
 };
 
-/** Rough icon glyph per metric zone, avoids a shadcn dependency for simple cases. */
 export function toneFromFill(fill: number): Tone {
   if (fill < 45) return 'coral';
   if (fill < 70) return 'yellow';

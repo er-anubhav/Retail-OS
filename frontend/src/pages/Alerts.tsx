@@ -55,7 +55,7 @@ export default function Alerts() {
   }
 
   const tiles = [
-    { icon: TriangleAlert, label: 'TOTAL', value: counts.all, tone: 'blue' as const },
+    { icon: TriangleAlert, label: 'TOTAL ALERTS', value: counts.all, tone: 'blue' as const },
     { icon: BellRing, label: 'CRITICAL', value: counts.critical, tone: 'coral' as const },
     { icon: TriangleAlert, label: 'WARNING', value: counts.warning, tone: 'yellow' as const },
     { icon: ShieldAlert, label: 'RESOLVED', value: counts.resolved, tone: 'lime' as const },
@@ -66,11 +66,11 @@ export default function Alerts() {
       index="04"
       eyebrow={store ? `${store.store_id} · ESCALATIONS` : 'ESCALATIONS'}
       title="Alerts"
-      description="Detections that crossed an operational threshold. Acknowledge to claim ownership, resolve once the floor is back to normal — both write back to the backend."
+      description="Operational threshold violations detected by edge computer vision models. Staff can acknowledge ownership or resolve incidents directly."
       tone="coral"
       actions={
-        <StatusBadge tone={counts.critical > 0 ? 'coral' : 'lime'} size="lg" dot pulse={counts.critical > 0}>
-          {counts.all - counts.resolved} OPEN
+        <StatusBadge tone={counts.critical > 0 ? 'coral' : 'lime'} size="md" dot pulse={counts.critical > 0}>
+          {counts.all - counts.resolved} ACTIVE ALERTS
         </StatusBadge>
       }
     >
@@ -79,26 +79,28 @@ export default function Alerts() {
           {tiles.map((tile) => (
             <div
               key={tile.label}
-              className="relative overflow-hidden rounded-brutal border-3 border-ink bg-surface p-4 shadow-brutal-xs"
+              className="relative overflow-hidden rounded-2xl border-2 sm:border-3 border-ink bg-white p-5 hard-shadow-xs"
             >
               <span
-                className={cn('absolute inset-x-0 top-0 h-1.5 border-b-3 border-ink', TONE_SOLID[tile.tone])}
+                className={cn('absolute inset-x-0 top-0 h-2 border-b-2 border-ink', TONE_SOLID[tile.tone])}
                 aria-hidden="true"
               />
-              <tile.icon className="h-5 w-5 pt-1.5" strokeWidth={2.8} />
-              <p className="mt-2 font-mono text-[9px] font-bold uppercase tracking-mega text-muted">
+              <tile.icon className="size-6 stroke-[2.5] text-ink" />
+              <p className="mt-3 font-mono text-xs font-bold uppercase tracking-wider text-ink/70">
                 {tile.label}
               </p>
-              <p className="mt-1 text-3xl font-bold leading-none tracking-tightest tnum">{tile.value}</p>
+              <p className="mt-1 font-grotesk text-3xl sm:text-4xl font-black leading-none tracking-tight text-ink tnum">
+                {tile.value}
+              </p>
             </div>
           ))}
         </Grid>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-mega text-muted">
-            <Filter className="h-3.5 w-3.5" strokeWidth={3} />
-            FILTER
+        <div className="flex flex-wrap items-center gap-2.5 pt-2">
+          <span className="flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-ink/75 mr-1">
+            <Filter className="size-4 stroke-[2.5]" />
+            Filter:
           </span>
           {FILTERS.map((option) => (
             <button
@@ -107,80 +109,74 @@ export default function Alerts() {
               onClick={() => setFilter(option.id)}
               aria-pressed={filter === option.id}
               className={cn(
-                'press-sm inline-flex items-center gap-2 rounded-brutal border-3 border-ink px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-mega',
-                filter === option.id ? 'bg-ink text-paper' : 'bg-surface text-muted',
+                'inline-flex items-center gap-2 rounded-full border-2 border-ink px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wider hard-shadow-xs hover:-translate-y-0.5 active:translate-y-0.5 transition-transform cursor-pointer',
+                filter === option.id ? 'bg-lime text-ink' : 'bg-white text-ink/75 hover:bg-sand',
               )}
             >
-              {option.label}
+              <span>{option.label}</span>
               <span
                 className={cn(
-                  'border-2 border-ink px-1 font-mono text-[9px] tnum',
-                  filter === option.id ? 'bg-lime text-ink' : 'bg-ink/[0.07]',
+                  'rounded-full border border-ink px-1.5 py-0.2 font-mono text-[10px] font-black',
+                  filter === option.id ? 'bg-white text-ink' : 'bg-sand text-ink',
                 )}
               >
                 {counts[option.id]}
               </span>
             </button>
           ))}
-          <span className="ml-auto font-mono text-[10px] uppercase tracking-mega text-muted">
-            SHOWING {list.length}
+          <span className="ml-auto font-mono text-xs uppercase tracking-wider text-ink/65">
+            Showing {list.length} alerts
           </span>
         </div>
 
         {actionError && (
-          <p className="border-3 border-ink bg-coral px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-wider">
+          <div className="rounded-xl border-2 border-ink bg-coral/90 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-cream hard-shadow-xs">
             {actionError}
-          </p>
+          </div>
         )}
 
         {/* List */}
         <Stack gap="sm">
-          <BlockHeading>Alert timeline</BlockHeading>
+          <BlockHeading>Alert Timeline</BlockHeading>
 
           {list.length === 0 ? (
-            <BrutalCard padding="lg" tone="lime">
-              <p className="text-center font-mono text-[11px] uppercase tracking-mega text-muted">
-                Nothing in this band. The floor is clear.
-              </p>
+            <BrutalCard padding="md">
+              <div className="flex items-center gap-3 py-6 text-center justify-center font-mono">
+                <p className="text-sm font-bold uppercase tracking-wider text-ink/70">
+                  No alerts in this category.
+                </p>
+              </div>
             </BrutalCard>
           ) : (
-            <ul className="grid gap-3">
+            <div className="space-y-4">
               {list.map((alert) => (
-                <li key={alert.id}>
-                  <AlertCard
-                    alert={alert}
-                    onAcknowledge={(id) => void run(acknowledgeAlert, id)}
-                    onResolve={(id) => void run(resolveAlert, id)}
-                  />
-                </li>
+                <AlertCard
+                  key={alert.id}
+                  alert={alert}
+                  onAcknowledge={(id) => run(acknowledgeAlert, id)}
+                  onResolve={(id) => run(resolveAlert, id)}
+                />
               ))}
-            </ul>
+            </div>
           )}
         </Stack>
 
-        <Disclosure summary="What each severity means" hint="ESCALATION RULES">
-          <ul className="grid gap-3 sm:grid-cols-3">
+        {/* Rules */}
+        <Disclosure summary="Alert Generation Matrix" hint="Deterministic backend rules">
+          <div className="space-y-3 font-mono">
             {SEVERITY_BANDS.map((band) => (
-              <li key={band.level} className="rounded-brutal border-3 border-ink p-3">
-                <StatusBadge tone={LEVEL_TONE[band.level]} size="sm" dot pulse={band.level === 'critical'}>
-                  {LEVEL_LABEL[band.level]}
-                </StatusBadge>
-                <ul className="mt-2.5 flex flex-col gap-1.5">
-                  {band.rules.map((rule) => (
-                    <li
-                      key={rule}
-                      className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted"
-                    >
-                      <span
-                        className={cn('h-2 w-2 shrink-0 border-2 border-ink', TONE_SOLID[LEVEL_TONE[band.level]])}
-                      />
-                      {rule}
-                    </li>
-                  ))}
-                </ul>
-              </li>
+              <div key={band.level} className="flex flex-col sm:flex-row sm:items-center gap-2 border-b border-ink/15 pb-2 last:border-b-0">
+                <span className="w-28">
+                  <StatusBadge tone={LEVEL_TONE[band.level]} size="sm">
+                    {LEVEL_LABEL[band.level]}
+                  </StatusBadge>
+                </span>
+                <span className="text-xs text-ink/80">
+                  {band.rules.join(' · ')}
+                </span>
+              </div>
             ))}
-          </ul>
+          </div>
         </Disclosure>
       </Stack>
     </Page>

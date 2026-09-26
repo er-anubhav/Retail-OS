@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { LockKeyhole, LogIn, ScanLine } from 'lucide-react';
+import { LockKeyhole, LogIn, Store } from 'lucide-react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { BrutalButton } from '@/components/brutal';
 import { useAuth } from '@/lib/auth';
@@ -31,39 +31,42 @@ export default function SignIn() {
   }
 
   return (
-    <main className="grid min-h-screen place-items-center bg-paper px-4 py-10">
-      <section className="w-full max-w-[460px] border-4 border-ink bg-surface shadow-brutal">
-        <div className="border-b-4 border-ink bg-lime px-5 py-4">
-          <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center border-3 border-ink bg-ink text-lime shadow-brutal-xs">
-              <ScanLine className="h-6 w-6" strokeWidth={3} />
+    <main className="grid min-h-screen place-items-center bg-background px-4 py-10 font-mono selection:bg-coral selection:text-cream">
+      <section className="w-full max-w-[460px] rounded-3xl border-3 border-ink bg-white hard-shadow overflow-hidden">
+        {/* Header */}
+        <div className="border-b-3 border-ink bg-lime px-6 py-6">
+          <div className="flex items-center gap-3.5">
+            <span className="grid size-12 place-items-center rounded-full border-2 border-ink bg-coral text-cream hard-shadow-xs shrink-0">
+              <Store className="size-6 stroke-[2.5]" />
             </span>
             <div>
-              <h1 className="text-2xl font-bold uppercase tracking-tight">RETAIL//AI</h1>
-              <p className="font-mono text-[10px] font-bold uppercase tracking-mega text-ink/70">
-                Secure dashboard access
+              <h1 className="font-serif text-3xl font-bold uppercase tracking-tight text-ink">
+                RETAIL//AI
+              </h1>
+              <p className="font-mono text-xs font-bold uppercase tracking-wider text-ink/75 mt-0.5">
+                Edge Store Intelligence Login
               </p>
             </div>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 p-5">
+        <form onSubmit={handleSubmit} className="space-y-4 p-6 sm:p-7">
           <label className="block">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-mega text-muted">
-              Email
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-ink/75">
+              Email Address
             </span>
             <input
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               autoComplete="email"
-              className="mt-1 w-full border-3 border-ink bg-paper px-3 py-2.5 text-sm font-bold outline-none focus:bg-yellow/25"
+              className="mt-1.5 w-full rounded-xl border-2 border-ink bg-cream px-4 py-2.5 text-sm font-bold text-ink outline-none hard-shadow-xs focus:border-sky transition-colors"
               required
             />
           </label>
 
           <label className="block">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-mega text-muted">
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-ink/75">
               Password
             </span>
             <input
@@ -71,27 +74,33 @@ export default function SignIn() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               autoComplete="current-password"
-              className="mt-1 w-full border-3 border-ink bg-paper px-3 py-2.5 text-sm font-bold outline-none focus:bg-yellow/25"
+              className="mt-1.5 w-full rounded-xl border-2 border-ink bg-cream px-4 py-2.5 text-sm font-bold text-ink outline-none hard-shadow-xs focus:border-sky transition-colors"
               required
             />
           </label>
 
           {error && (
-            <p className="border-3 border-ink bg-coral px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-wider">
+            <div className="rounded-xl border-2 border-ink bg-coral/90 px-3.5 py-2 font-mono text-xs font-bold uppercase tracking-wider text-cream hard-shadow-xs">
               {error}
-            </p>
+            </div>
           )}
 
-          <BrutalButton
-            type="submit"
-            variant="primary"
-            size="lg"
-            full
-            disabled={submitting}
-            icon={submitting ? <LockKeyhole strokeWidth={3} /> : <LogIn strokeWidth={3} />}
-          >
-            {submitting ? 'SIGNING IN' : 'SIGN IN'}
-          </BrutalButton>
+          <div className="pt-2">
+            <BrutalButton
+              type="submit"
+              variant="primary"
+              size="lg"
+              full
+              disabled={submitting}
+              icon={submitting ? <LockKeyhole className="size-4 stroke-[3]" /> : <LogIn className="size-4 stroke-[3]" />}
+            >
+              {submitting ? 'SIGNING IN...' : 'SIGN IN TO DASHBOARD'}
+            </BrutalButton>
+          </div>
+
+          <p className="text-center font-mono text-xs uppercase tracking-wider text-ink/60 pt-2">
+            Demo: manager@retail.ai / password123
+          </p>
         </form>
       </section>
     </main>

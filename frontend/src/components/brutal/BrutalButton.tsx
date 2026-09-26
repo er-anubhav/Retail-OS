@@ -6,31 +6,30 @@ export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'ai
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const VARIANT: Record<ButtonVariant, string> = {
-  primary: 'bg-ink text-paper',
-  secondary: 'bg-surface text-ink',
-  danger: 'bg-coral text-ink',
+  primary: 'bg-lime text-ink',
+  secondary: 'bg-white text-ink',
+  danger: 'bg-coral text-cream',
   success: 'bg-lime text-ink',
-  ai: 'bg-purple text-white',
-  info: 'bg-blue text-white',
-  ghost: 'bg-transparent text-ink',
+  ai: 'bg-magenta text-cream',
+  info: 'bg-sky text-cream',
+  ghost: 'bg-transparent text-ink border-transparent shadow-none hover:bg-black/5',
 };
 
 const SIZE: Record<ButtonSize, string> = {
-  sm: 'px-2.5 py-1.5 text-[10px] gap-1.5',
-  md: 'px-4 py-2.5 text-[11px] gap-2',
-  lg: 'px-6 py-3.5 text-sm gap-2.5',
+  sm: 'px-3.5 py-1.5 text-xs gap-1.5',
+  md: 'px-5 py-2.5 text-sm gap-2',
+  lg: 'px-7 py-3 text-base gap-2.5',
 };
 
 const ICON_SIZE: Record<ButtonSize, string> = {
-  sm: 'h-3 w-3',
+  sm: 'h-3.5 w-3.5',
   md: 'h-4 w-4',
-  lg: 'h-[18px] w-[18px]',
+  lg: 'h-5 w-5',
 };
 
 /**
- * Signature neobrutalist button physics:
- * 4px border · 5px hard shadow · hover travels 2px · active flattens to 0.
- * Small buttons use a lighter 3px variant so dense toolbars stay readable.
+ * Signature SIH26008 button:
+ * Pill rounded-full, 2px border, hard-shadow-xs, hover translateY -1px.
  */
 export function buttonClasses(
   variant: ButtonVariant = 'primary',
@@ -38,8 +37,7 @@ export function buttonClasses(
   className?: string,
 ) {
   return cn(
-    size === 'sm' ? 'press-sm' : 'press',
-    'inline-flex select-none items-center justify-center rounded-brutal border-4 border-ink font-bold uppercase tracking-wider',
+    'inline-flex select-none items-center justify-center rounded-full border-2 border-ink font-mono font-bold uppercase tracking-wider hard-shadow-xs hover:-translate-y-0.5 active:translate-y-0.5 transition-transform cursor-pointer',
     VARIANT[variant],
     SIZE[size],
     className,
@@ -69,27 +67,34 @@ export function BrutalButton({
   className,
   children,
   type = 'button',
+  disabled,
   ...rest
 }: BrutalButtonProps) {
   return (
     <button
       type={type}
-      className={buttonClasses(variant, size, cn(full && 'w-full', className))}
+      disabled={disabled}
+      className={cn(
+        buttonClasses(variant, size, className),
+        full && 'w-full',
+        disabled && 'opacity-60 cursor-not-allowed hover:translate-y-0',
+      )}
       {...rest}
     >
       {icon && <span className={cn('shrink-0', ICON_SIZE[size])}>{icon}</span>}
-      {children && <span className="truncate">{children}</span>}
+      {children && <span>{children}</span>}
       {iconRight && <span className={cn('shrink-0', ICON_SIZE[size])}>{iconRight}</span>}
     </button>
   );
 }
 
-export interface BrutalLinkProps extends BaseProps {
+export interface BrutalLinkButtonProps extends BaseProps {
   to: string;
-  ariaLabel?: string;
 }
 
-export function BrutalLink({
+export type BrutalLinkProps = BrutalLinkButtonProps;
+
+export function BrutalLinkButton({
   to,
   variant = 'primary',
   size = 'md',
@@ -98,40 +103,51 @@ export function BrutalLink({
   full,
   className,
   children,
-  ariaLabel,
-}: BrutalLinkProps) {
+}: BrutalLinkButtonProps) {
   return (
     <Link
       to={to}
-      aria-label={ariaLabel}
-      className={buttonClasses(variant, size, cn(full && 'w-full', className))}
+      className={cn(buttonClasses(variant, size, className), full && 'w-full')}
     >
       {icon && <span className={cn('shrink-0', ICON_SIZE[size])}>{icon}</span>}
-      {children && <span className="truncate">{children}</span>}
+      {children && <span>{children}</span>}
       {iconRight && <span className={cn('shrink-0', ICON_SIZE[size])}>{iconRight}</span>}
     </Link>
   );
 }
 
-/** Square icon-only control for dense toolbars. */
-export function IconButton({
+export const BrutalLink = BrutalLinkButton;
+
+/** Icon-only pill button */
+export function BrutalIconButton({
+  icon,
+  label,
+  size = 'md',
   variant = 'secondary',
   className,
-  label,
-  icon,
-  size = 'md',
   ...rest
-}: BrutalButtonProps & { label: string }) {
-  const box = size === 'sm' ? 'h-7 w-7' : size === 'lg' ? 'h-11 w-11' : 'h-9 w-9';
+}: Omit<BrutalButtonProps, 'children' | 'iconRight'> & { label: string }) {
+  const SIZES: Record<ButtonSize, string> = {
+    sm: 'h-8 w-8',
+    md: 'h-10 w-10',
+    lg: 'h-12 w-12',
+  };
   return (
     <button
       type="button"
       aria-label={label}
       title={label}
-      className={buttonClasses(variant, 'sm', cn('p-0', box, className))}
+      className={cn(
+        'grid place-items-center rounded-full border-2 border-ink font-bold hard-shadow-xs hover:-translate-y-0.5 active:translate-y-0.5 transition-transform cursor-pointer',
+        VARIANT[variant],
+        SIZES[size],
+        className,
+      )}
       {...rest}
     >
-      <span className={cn(ICON_SIZE[size])}>{icon}</span>
+      <span className={ICON_SIZE[size]}>{icon}</span>
     </button>
   );
 }
+
+export const IconButton = BrutalIconButton;

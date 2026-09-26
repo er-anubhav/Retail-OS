@@ -32,11 +32,11 @@ export default function Overview() {
       index="01"
       eyebrow={store ? `${store.store_id} · ${store.city}` : 'STORE PULSE'}
       title="Overview"
-      description="A live picture of the active store. Everything here is read from the backend REST API and refreshed on a timer — no simulated data."
+      description="A real-time edge telemetry summary of the active store. Data is ingested from computer vision models and aggregated in MongoDB."
       tone="blue"
       actions={
         overview && (
-          <StatusBadge tone="blue" size="lg" outline>
+          <StatusBadge tone="lime" size="md">
             {overview.cameras_online}/{overview.cameras_total} CAMERAS ONLINE
           </StatusBadge>
         )
@@ -61,32 +61,32 @@ export default function Overview() {
             right={
               <Link
                 to="/alerts"
-                className="press-sm flex items-center gap-1.5 rounded-brutal border-3 border-ink bg-surface px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-mega hover:bg-yellow"
+                className="flex items-center gap-2 rounded-full border-2 border-ink bg-white px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wider hard-shadow-xs hover:-translate-y-0.5 transition-transform"
               >
-                ALL ALERTS
-                <ArrowRight className="h-3.5 w-3.5" strokeWidth={3} />
+                <span>ALL ALERTS</span>
+                <ArrowRight className="size-3.5 stroke-[2.5]" />
               </Link>
             }
           >
-            Needs attention
+            Needs Attention
           </BlockHeading>
 
           <BrutalCard padding="none" tone={activeAlerts.length > 0 ? 'coral' : 'lime'}>
             {activeAlerts.length > 0 ? (
-              <ul className="divide-y-3 divide-ink/15">
+              <div className="divide-y-2 divide-ink/15 p-2">
                 {activeAlerts.map((alert) => (
-                  <li key={alert.id}>
+                  <div key={alert.id} className="p-1">
                     <AlertLine alert={alert} />
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             ) : (
-              <div className="flex items-center gap-3 p-5">
-                <CheckCircle2 className="h-6 w-6 shrink-0 text-lime" strokeWidth={3} />
+              <div className="flex items-center gap-4 p-6 font-mono">
+                <CheckCircle2 className="size-7 shrink-0 text-lime stroke-[2.5]" />
                 <div>
-                  <p className="font-bold uppercase tracking-tightest">All clear</p>
-                  <p className="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted">
-                    No active alerts in this store
+                  <p className="font-grotesk text-xl font-bold uppercase tracking-tight text-ink">All Clear</p>
+                  <p className="mt-0.5 text-xs uppercase tracking-wider text-ink/70">
+                    No active or unresolved alerts in this store
                   </p>
                 </div>
               </div>
@@ -98,32 +98,32 @@ export default function Overview() {
         <Stack gap="sm">
           <BlockHeading
             right={
-              <span className="font-mono text-[10px] uppercase tracking-mega text-muted">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-ink/70">
                 {attention || 'FULL COVERAGE'}
               </span>
             }
           >
-            Camera fleet
+            Camera Fleet Status
           </BlockHeading>
 
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-3">
             {counts.map((item) => (
               <div
                 key={item.status}
-                className="flex items-center gap-3 rounded-brutal border-3 border-ink bg-surface p-3 shadow-brutal-xs"
+                className="flex items-center gap-3.5 rounded-2xl border-2 border-ink bg-white p-4 hard-shadow-xs"
               >
                 <span
                   className={cn(
-                    'h-8 w-2 shrink-0 border-2 border-ink',
+                    'h-10 w-2.5 rounded-full shrink-0 border border-ink',
                     TONE_SOLID[CAMERA_TONE[item.status]],
                   )}
                   aria-hidden="true"
                 />
                 <div className="min-w-0">
-                  <p className="font-mono text-[9px] font-bold uppercase tracking-mega text-muted">
+                  <p className="font-mono text-xs font-bold uppercase tracking-wider text-ink/70">
                     {CAMERA_LABEL[item.status]}
                   </p>
-                  <p className="text-2xl font-bold leading-none tracking-tightest tnum">
+                  <p className="font-grotesk text-3xl font-black leading-none tracking-tight text-ink tnum mt-0.5">
                     {item.count}
                   </p>
                 </div>
@@ -131,20 +131,20 @@ export default function Overview() {
             ))}
           </div>
 
-          {/* Secondary detail stays collapsed until asked for. */}
-          <Disclosure summary="Camera-by-camera health" hint={`${cameras.length} enrolled`}>
+          {/* Secondary detail */}
+          <Disclosure summary="Camera-by-camera health breakdown" hint={`${cameras.length} cameras enrolled`}>
             {cameras.length > 0 ? (
-              <ul className="grid gap-2 sm:grid-cols-2">
+              <ul className="grid gap-3 sm:grid-cols-2">
                 {cameras.map((camera) => (
                   <li
                     key={camera.camera_id}
-                    className="flex items-center justify-between gap-3 rounded-brutal border-3 border-ink/20 bg-ink/[0.02] px-3 py-2"
+                    className="flex items-center justify-between gap-3 rounded-xl border-2 border-ink/20 bg-sand/50 px-4 py-3"
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-[11px] font-bold uppercase tracking-wide">
+                      <span className="block truncate font-mono text-xs sm:text-sm font-bold uppercase tracking-wide text-ink">
                         {camera.camera_id} · {camera.name}
                       </span>
-                      <span className="block truncate font-mono text-[9px] uppercase tracking-wider text-muted">
+                      <span className="block truncate font-mono text-xs uppercase tracking-wider text-ink/65 mt-0.5">
                         {camera.zone}
                       </span>
                     </span>
@@ -155,7 +155,7 @@ export default function Overview() {
                 ))}
               </ul>
             ) : (
-              <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
+              <p className="font-mono text-xs uppercase tracking-wider text-ink/70">
                 No cameras enrolled for this store.
               </p>
             )}
@@ -163,9 +163,9 @@ export default function Overview() {
         </Stack>
 
         {lastUpdated && (
-          <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-mega text-muted">
-            <TriangleAlert className="h-3.5 w-3.5" strokeWidth={3} />
-            Data polled from the REST API · refreshed every 5 seconds
+          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-ink/60">
+            <TriangleAlert className="size-4 stroke-[2.5]" />
+            Live data polled from the REST API · Refreshed automatically every 5 seconds
           </p>
         )}
       </Stack>

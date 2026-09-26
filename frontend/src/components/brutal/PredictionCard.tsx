@@ -1,4 +1,4 @@
-import { Activity, Brain, TrendingUp } from 'lucide-react';
+import { Activity, Brain } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { RISK_TONE, TONE_BG, TONE_SOLID } from '@/lib/tone';
 import type { Prediction } from '@/lib/types';
@@ -9,11 +9,11 @@ export function AIBadge({ className, label = 'YOLO EDGE' }: { className?: string
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-brutal border-3 border-ink bg-purple px-2 py-1 font-mono text-[9px] font-bold uppercase tracking-mega text-white',
+        'inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-magenta px-3 py-0.5 font-mono text-xs font-black uppercase tracking-wider text-cream hard-shadow-xs',
         className,
       )}
     >
-      <Brain className="h-3 w-3" strokeWidth={3} />
+      <Brain className="size-3.5 stroke-[2.5]" />
       {label}
     </span>
   );
@@ -35,10 +35,10 @@ export function PredictionCard({ prediction, className }: PredictionCardProps) {
       interactive
       padding="none"
     >
-      <div className="flex flex-col gap-3 p-4">
+      <div className="flex flex-col gap-3.5 p-5 sm:p-6 font-mono text-ink">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-mega text-muted">
-            <Activity className="h-3.5 w-3.5" strokeWidth={3} />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ink/75">
+            <Activity className="size-4 stroke-[2.5]" />
             {prediction.kind}
           </span>
           <StatusBadge tone={tone} size="sm" dot pulse={prediction.level === 'high'}>
@@ -47,12 +47,12 @@ export function PredictionCard({ prediction, className }: PredictionCardProps) {
         </div>
 
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-2xl font-bold uppercase leading-none tracking-tightest md:text-3xl">
+          <h3 className="font-grotesk text-2xl sm:text-3xl font-black uppercase tracking-tight text-ink">
             {prediction.subject}
           </h3>
           <span
             className={cn(
-              'shrink-0 -rotate-2 rounded-brutal border-3 border-ink px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wide shadow-brutal-xs',
+              'shrink-0 rounded-full border-2 border-ink px-3 py-1 font-mono text-xs font-black uppercase tracking-wider hard-shadow-xs',
               TONE_BG[prediction.tone],
             )}
           >
@@ -60,27 +60,21 @@ export function PredictionCard({ prediction, className }: PredictionCardProps) {
           </span>
         </div>
 
-        <p className="text-[13px] leading-snug text-muted">{prediction.detail}</p>
+        <p className="font-mono text-xs sm:text-sm text-ink/80 leading-relaxed">
+          {prediction.detail}
+        </p>
 
-        <div className="mt-auto border-t-3 border-dashed border-ink/20 pt-3">
-          <div className="mb-1.5 flex items-center justify-between gap-2">
-            <span className="font-mono text-[10px] font-semibold uppercase tracking-mega text-muted">
-              MODEL CONFIDENCE
-            </span>
-            <span className="font-mono text-[11px] font-bold tnum">{confidence}%</span>
-          </div>
-          <div className="flex h-3 w-full border-3 border-ink bg-surface" aria-hidden="true">
-            <div
-              className={cn('h-full transition-[width] duration-700', TONE_SOLID[prediction.tone])}
+        <div className="flex items-center gap-3 border-t-2 border-ink/15 pt-3">
+          <span className="text-xs font-bold uppercase tracking-wider text-ink/70">
+            CONFIDENCE:
+          </span>
+          <div className="flex h-3 flex-1 rounded-full border border-ink overflow-hidden bg-sand">
+            <span
+              className={cn('h-full', TONE_SOLID[prediction.tone])}
               style={{ width: `${confidence}%` }}
             />
           </div>
-          <div className="mt-2 flex items-center gap-1.5 text-muted">
-            <TrendingUp className="h-3 w-3" strokeWidth={3} />
-            <span className="font-mono text-[9px] uppercase tracking-mega">
-              HORIZON 60 MIN · EDGE INFERENCE
-            </span>
-          </div>
+          <span className="text-xs font-bold text-ink tnum">{confidence}%</span>
         </div>
       </div>
     </BrutalCard>
