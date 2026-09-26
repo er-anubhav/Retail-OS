@@ -1,9 +1,66 @@
-node_modules
-dist
-dist-ssr
+# Dependencies & Build Artefacts
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+dist-ssr/
+frontend/dist-ssr/
 *.local
 .env
 .env.local
+backend/.env
 .DS_Store
 *.log
-.vite
+.vite/
+frontend/.vite/
+
+# Python
+__pycache__/
+backend/app/**/__pycache__/
+ai-ml/__pycache__/
+ai/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Model checkpoints and weights (Ultralytics / PyTorch / HF)
+*.pt
+*.pth
+*.onnx
+*.engine
+*.safetensors
+*.bin
+
+# YOLO / Ultralytics default outputs and runs
+runs/
+.ultralytics/
+
+# Video files and datasets
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.jpg
+*.jpeg
+*.png
+
+# Runtime outputs
+outputs/
+ai/outputs/
+ai-ml/outputs/
+ai/*.json
+ai-ml/*.json
+!ai/config*.json
+!ai-ml/config*.json
+
+# IDE / OS
+.vscode/
+.idea/
+
