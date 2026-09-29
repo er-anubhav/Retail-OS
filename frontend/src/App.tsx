@@ -10,7 +10,11 @@ import { Users, Timer, Boxes, Footprints, AlertTriangle, Activity, Sparkles, Vid
 
 export const App: React.FC = () => {
   const [data, setData] = useState<StoreOverview>(FALLBACK_OVERVIEW);
-  const [activeTab, setActiveTab] = useState<'operations' | 'directives' | 'simulation'>('operations');
+  const [activeTab, setActiveTab] = useState<'operations' | 'directives' | 'simulation'>(() => {
+    const param = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('tab') : null;
+    if (param === 'simulation' || param === 'directives') return param;
+    return 'operations';
+  });
 
   const loadData = useCallback(async () => {
     try {

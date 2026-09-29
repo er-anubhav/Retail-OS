@@ -1,4 +1,27 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+
+interface DetectionItem {
+  track_id: number;
+  class: string;
+  confidence: number;
+  bbox: [number, number, number, number]; // [x1, y1, x2, y2]
+}
+
+interface DetectionFrame {
+  t: number;
+  detections: DetectionItem[];
+}
+
+interface DetectionDataset {
+  video: {
+    width: number;
+    height: number;
+    fps: number;
+    duration: number;
+    sample_fps: number;
+  };
+  frames: DetectionFrame[];
+}
 import {
   Play,
   Pause,
@@ -36,6 +59,35 @@ export const AISimulationView: React.FC = () => {
   const [duration, setDuration] = useState<number>(11.37);
   const [playbackRate, setPlaybackRate] = useState<number>(1.0);
   const [manualCounter4, setManualCounter4] = useState<boolean | null>(null);
+  const [detectionData, setDetectionData] = useState<DetectionDataset | null>(null);
+
+  // Load precomputed YOLO11n + ByteTrack artifact
+  useEffect(() => {
+    fetch('/demo/detections.json')
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+        return res.json();
+      })
+      .then((data: DetectionDataset) => {
+        setDetectionData(data);
+      })
+      .catch((err) => {
+        console.warn('Could not load precomputed detections:', err);
+      });
+  }, []);
+
+  // Synchronize playback timestamp at display refresh rate for smooth bounding box tracking
+  useEffect(() => {
+    let animId: number;
+    const syncTime = () => {
+      if (videoRef.current && !videoRef.current.paused) {
+        setCurrentTime(videoRef.current.currentTime);
+      }
+      animId = requestAnimationFrame(syncTime);
+    };
+    animId = requestAnimationFrame(syncTime);
+    return () => cancelAnimationFrame(animId);
+  }, []);
 
   // Sync state with video playback
   const handleTimeUpdate = () => {
@@ -79,6 +131,50 @@ export const AISimulationView: React.FC = () => {
   // DETERMINISTIC SIMULATION ENGINE (Synchronized to video.currentTime)
   // -------------------------------------------------------------
   const t = currentTime;
+
+  // Real YOLO11n + ByteTrack Detections with linear interpolation across 10-FPS sampled frames
+  const activeDetections: DetectionItem[] = useMemo(() => {
+    if (!detectionData || !detectionData.frames || detectionData.frames.length === 0) {
+      return [];
+    }
+    const frames = detectionData.frames;
+    if (t <= frames[0].t) return frames[0].detections;
+    if (t >= frames[frames.length - 1].t) return frames[frames.length - 1].detections;
+
+    // Fast index lookup
+    let idx = Math.min(Math.max(0, Math.floor(t * 10)), frames.length - 2);
+    while (idx > 0 && frames[idx].t > t) idx--;
+    while (idx < frames.length - 1 && frames[idx + 1].t <= t) idx++;
+
+    const f0 = frames[idx];
+    const f1 = frames[Math.min(frames.length - 1, idx + 1)];
+    const dt = f1.t - f0.t;
+    const alpha = dt > 0 ? Math.max(0, Math.min(1, (t - f0.t) / dt)) : 0;
+
+    const f1Map = new Map<number, DetectionItem>();
+    f1.detections.forEach((d) => f1Map.set(d.track_id, d));
+
+    const interpolated: DetectionItem[] = [];
+    for (const d0 of f0.detections) {
+      const d1 = f1Map.get(d0.track_id);
+      if (d1) {
+        interpolated.push({
+          track_id: d0.track_id,
+          class: 'person',
+          confidence: Number((d0.confidence + alpha * (d1.confidence - d0.confidence)).toFixed(2)),
+          bbox: [
+            Number((d0.bbox[0] + alpha * (d1.bbox[0] - d0.bbox[0])).toFixed(1)),
+            Number((d0.bbox[1] + alpha * (d1.bbox[1] - d0.bbox[1])).toFixed(1)),
+            Number((d0.bbox[2] + alpha * (d1.bbox[2] - d0.bbox[2])).toFixed(1)),
+            Number((d0.bbox[3] + alpha * (d1.bbox[3] - d0.bbox[3])).toFixed(1)),
+          ],
+        });
+      } else if (alpha < 0.4) {
+        interpolated.push(d0);
+      }
+    }
+    return interpolated;
+  }, [detectionData, t]);
 
   // Phase 1: 0 - 2.5s (Baseline calm)
   // Phase 2: 2.5 - 5.5s (Rush enters, queue forms)
@@ -190,7 +286,7 @@ export const AISimulationView: React.FC = () => {
       time: 0.8,
       timeLabel: '00:00.8',
       badge: 'EVENT',
-      title: 'Shopper #104 Entered Store',
+      title: 'Shopper Line Crossing Detected',
       detail: 'Vector line intersection confirmed at Main Entrance.',
     },
     {
@@ -261,12 +357,12 @@ export const AISimulationView: React.FC = () => {
           <div className="size-2 rounded-full bg-amber-500 animate-ping" />
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-amber-950 uppercase tracking-wider">
+              <span className="text-xs  text-amber-950 uppercase tracking-wider">
                 SIMULATION MODE — OFFLINE DEMONSTRATION
               </span>
             </div>
             <p className="text-[11px] text-amber-900/90 mt-0.5">
-              Demonstrates the edge decision loop using deterministic signals synchronized with the local video playback. No external AI inference or cloud streaming is performed.
+              REAL VISUAL DETECTIONS + SIMULATED STORE INTELLIGENCE: Video bounding boxes display actual precomputed YOLO11n + ByteTrack person detections. Store telemetry, queue projections, and directives demonstrate the edge intelligence loop.
             </p>
           </div>
         </div>
@@ -287,11 +383,11 @@ export const AISimulationView: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <VideoIcon className="size-4 text-purple-600" />
-                <span className="text-xs font-semibold text-slate-800 uppercase tracking-wider">
+                <span className="text-xs  text-slate-800 uppercase tracking-wider">
                   Store Camera Feed #01 (Entrance & Checkout)
                 </span>
               </div>
-              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
+              <span className="text-[10px]  font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
                 T = {currentTime.toFixed(1)}s / {duration.toFixed(1)}s
               </span>
             </div>
@@ -312,78 +408,50 @@ export const AISimulationView: React.FC = () => {
 
               {/* Prominent Overlay Notice */}
               <div className="absolute top-2 left-2 z-10">
-                <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-black/75 backdrop-blur-xs text-[9.5px] font-mono font-semibold text-emerald-400 border border-emerald-500/40">
+                <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-black/80 backdrop-blur-xs text-[9.5px] font-mono font-semibold text-emerald-400 border border-emerald-500/40 shadow-xs">
                   <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   SIMULATED TRACKING — ILLUSTRATIVE DEMO
                 </span>
               </div>
 
-              {/* Virtual Entrance Line Overlay */}
-              <div className="absolute top-10 left-4 right-1/2 border-b-2 border-dashed border-cyan-400/80 pointer-events-none">
-                <span className="absolute -top-4 left-0 text-[8.5px] font-mono text-cyan-300 bg-cyan-950/80 px-1 rounded">
-                  ENTRANCE LINE (VIRTUAL)
+              {/* Real Precomputed YOLO11n + ByteTrack Person Bounding Boxes */}
+              {activeDetections.map((det) => {
+                const nativeW = detectionData?.video.width || 640;
+                const nativeH = detectionData?.video.height || 360;
+                const left = (det.bbox[0] / nativeW) * 100;
+                const top = (det.bbox[1] / nativeH) * 100;
+                const width = ((det.bbox[2] - det.bbox[0]) / nativeW) * 100;
+                const height = ((det.bbox[3] - det.bbox[1]) / nativeH) * 100;
+
+                return (
+                  <div
+                    key={`track-${det.track_id}`}
+                    className="absolute border border-emerald-400 bg-emerald-500/10 rounded-xs pointer-events-none transition-[left,top,width,height] duration-75"
+                    style={{
+                      left: `${left}%`,
+                      top: `${top}%`,
+                      width: `${width}%`,
+                      height: `${height}%`,
+                    }}
+                  >
+                    <span className="absolute -top-3.5 left-0 text-[8px] font-mono font-medium text-emerald-300 bg-black/90 px-1 py-0.2 rounded-xs whitespace-nowrap border border-emerald-500/40">
+                      PERSON · ID {det.track_id} · {det.confidence.toFixed(2)}
+                    </span>
+                  </div>
+                );
+              })}
+
+              {/* Simulated Zone Overlay (Clearly labeled as operational reference) */}
+              <div className="absolute bottom-4 right-4 w-40 h-24 border border-dashed border-amber-400/60 bg-amber-400/5 rounded pointer-events-none flex items-start justify-end p-1">
+                <span className="text-[8px] font-mono text-amber-300 bg-black/80 px-1 py-0.5 rounded border border-amber-500/30">
+                  SIMULATED CHECKOUT ZONE
                 </span>
               </div>
 
-              {/* Virtual Checkout ROI Overlay */}
-              <div className="absolute bottom-6 right-4 w-44 h-28 border-2 border-dashed border-amber-400/70 bg-amber-400/10 rounded pointer-events-none flex items-start justify-end p-1">
-                <span className="text-[8.5px] font-mono text-amber-300 bg-amber-950/80 px-1 rounded">
-                  CHECKOUT QUEUE ROI ({queueLength} in line)
-                </span>
-              </div>
-
-              {/* Dynamic Simulated Person Bounding Boxes based on Time */}
-              {/* Person 1: Walking shopper */}
-              <div
-                className="absolute border-2 border-emerald-400 bg-emerald-500/10 rounded transition-all duration-300 pointer-events-none"
-                style={{
-                  top: `${32 + Math.sin(t * 0.8) * 8}%`,
-                  left: `${22 + (t * 4.5) % 55}%`,
-                  width: '14%',
-                  height: '42%',
-                }}
-              >
-                <span className="absolute -top-4 left-0 text-[8.5px] font-mono text-emerald-300 bg-emerald-950/90 px-1 rounded">
-                  ID: #104 (Shopper)
-                </span>
-              </div>
-
-              {/* Person 2: Shopper with cart */}
-              <div
-                className="absolute border-2 border-emerald-400 bg-emerald-500/10 rounded transition-all duration-300 pointer-events-none"
-                style={{
-                  top: '36%',
-                  left: `${58 - (t * 2.2) % 30}%`,
-                  width: '16%',
-                  height: '46%',
-                }}
-              >
-                <span className="absolute -top-4 left-0 text-[8.5px] font-mono text-emerald-300 bg-emerald-950/90 px-1 rounded">
-                  ID: #108 (Cart)
-                </span>
-              </div>
-
-              {/* Person 3: In Queue area */}
-              {t >= 3.0 && (
-                <div
-                  className="absolute border-2 border-amber-400 bg-amber-500/10 rounded transition-all duration-300 pointer-events-none animate-in fade-in"
-                  style={{
-                    bottom: '12%',
-                    right: `${12 + (t % 3) * 4}%`,
-                    width: '13%',
-                    height: '38%',
-                  }}
-                >
-                  <span className="absolute -top-4 left-0 text-[8.5px] font-mono text-amber-300 bg-amber-950/90 px-1 rounded">
-                    ID: #115 (Queue)
-                  </span>
-                </div>
-              )}
-
-              {/* Timecode Watermark */}
-              <div className="absolute bottom-2 left-2 z-10">
-                <span className="text-[10px] font-mono text-slate-300 bg-black/60 px-1.5 py-0.5 rounded">
-                  CAM-01 · 25 FPS · LOCAL CACHE
+              {/* Pipeline Status Watermark */}
+              <div className="absolute bottom-2 left-2 z-10 flex items-center gap-1.5">
+                <span className="text-[9.5px] font-mono text-slate-300 bg-black/75 backdrop-blur-xs px-2 py-0.5 rounded border border-slate-700/60">
+                  YOLO11n + ByteTrack · {activeDetections.length} Persons Detected
                 </span>
               </div>
             </div>
@@ -412,14 +480,14 @@ export const AISimulationView: React.FC = () => {
 
               {/* Speed Buttons */}
               <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg text-xs font-medium">
-                <span className="px-1.5 text-[10px] text-slate-500 uppercase font-semibold">Speed:</span>
+                <span className="px-1.5 text-[10px] text-slate-500 uppercase ">Speed:</span>
                 {[0.5, 1.0, 2.0].map((rate) => (
                   <button
                     key={rate}
                     onClick={() => changeSpeed(rate)}
                     className={`px-2 py-0.5 rounded text-[11px] transition ${
                       playbackRate === rate
-                        ? 'bg-white text-slate-900 shadow-2xs font-semibold'
+                        ? 'bg-white text-slate-900 shadow-2xs '
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -440,7 +508,7 @@ export const AISimulationView: React.FC = () => {
           {/* 7-Stage Intelligence Loop Step Indicator */}
           <div className="rounded-xl border border-slate-200/90 bg-white p-3 shadow-card space-y-2">
             <div className="flex items-center justify-between text-xs font-medium text-slate-700">
-              <span className="uppercase tracking-wider font-semibold text-[10px] text-slate-500">
+              <span className="uppercase tracking-wider  text-[10px] text-slate-500">
                 End-to-End Edge Decision Pipeline
               </span>
               <span className="text-[11px] text-blue-600 font-medium">
@@ -465,7 +533,7 @@ export const AISimulationView: React.FC = () => {
                     key={s.step}
                     className={`p-1.5 rounded-lg border transition-all ${
                       isActive
-                        ? 'bg-blue-600 text-white border-blue-700 shadow-2xs font-bold scale-102'
+                        ? 'bg-blue-600 text-white border-blue-700 shadow-2xs  scale-102'
                         : isPassed
                         ? 'bg-emerald-50 text-emerald-800 border-emerald-200 font-medium'
                         : 'bg-slate-50 text-slate-400 border-slate-200'
@@ -484,7 +552,7 @@ export const AISimulationView: React.FC = () => {
           {/* Event Stream Log */}
           <div className="rounded-xl border border-slate-200/90 bg-white p-3 shadow-card space-y-2">
             <div className="flex items-center justify-between pb-1 border-b border-slate-100">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-800">
+              <div className="flex items-center gap-1.5 text-xs  text-slate-800">
                 <Activity className="size-3.5 text-slate-500" />
                 <span>Simulated Edge Telemetry Stream</span>
               </div>
@@ -505,7 +573,7 @@ export const AISimulationView: React.FC = () => {
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-1.5">
                         <span
-                          className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${
+                          className={`text-[9px]  px-1.5 py-0.2 rounded border ${
                             ev.badge === 'ACTION'
                               ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
                               : ev.badge === 'RECOMMENDATION'
@@ -523,7 +591,7 @@ export const AISimulationView: React.FC = () => {
                       </div>
                       <p className="text-[11px] text-slate-500">{ev.detail}</p>
                     </div>
-                    <span className="text-[10px] font-mono text-slate-400 shrink-0">{ev.timeLabel}</span>
+                    <span className="text-[10px]  text-slate-400 shrink-0">{ev.timeLabel}</span>
                   </div>
                 ))
               )}
@@ -536,7 +604,7 @@ export const AISimulationView: React.FC = () => {
           {/* Synchronized Metrics Card */}
           <div className="rounded-xl border border-slate-200/90 bg-white p-3 shadow-card space-y-2.5">
             <div className="flex items-center justify-between pb-1 border-b border-slate-100">
-              <span className="text-xs font-semibold text-slate-800 uppercase tracking-wider">
+              <span className="text-xs  text-slate-800 uppercase tracking-wider">
                 Live Store Telemetry
               </span>
               <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -547,7 +615,7 @@ export const AISimulationView: React.FC = () => {
                 <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-medium">
                   Occupancy
                 </span>
-                <span className="text-lg font-bold text-slate-900 block mt-0.5">{occupancy}</span>
+                <span className="text-lg  text-slate-900 block mt-0.5">{occupancy}</span>
                 <span className="text-[9.5px] text-slate-500 block">shoppers inside</span>
               </div>
 
@@ -555,7 +623,7 @@ export const AISimulationView: React.FC = () => {
                 <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-medium">
                   Footfall
                 </span>
-                <span className="text-lg font-bold text-emerald-700 block mt-0.5">
+                <span className="text-lg  text-emerald-700 block mt-0.5">
                   {totalEntries} in / {totalExits} out
                 </span>
                 <span className="text-[9.5px] text-slate-500 block">line crossings</span>
@@ -565,7 +633,7 @@ export const AISimulationView: React.FC = () => {
                 <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-medium">
                   Queue Length
                 </span>
-                <span className="text-lg font-bold text-amber-700 block mt-0.5">{queueLength}</span>
+                <span className="text-lg  text-amber-700 block mt-0.5">{queueLength}</span>
                 <span className="text-[9.5px] text-slate-500 block">in checkout zone</span>
               </div>
 
@@ -573,7 +641,7 @@ export const AISimulationView: React.FC = () => {
                 <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-medium">
                   Estimated Wait
                 </span>
-                <span className="text-lg font-bold text-blue-700 block mt-0.5">~{waitMinutes}m</span>
+                <span className="text-lg  text-blue-700 block mt-0.5">~{waitMinutes}m</span>
                 <span className="text-[9.5px] text-slate-500 block">Operational Estimate</span>
               </div>
             </div>
@@ -582,17 +650,17 @@ export const AISimulationView: React.FC = () => {
           {/* Mathematical Rule Explanation (Flow-Balance Queue Growth Projection) */}
           <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-3 shadow-card space-y-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-900">
+              <div className="flex items-center gap-1.5 text-xs  text-blue-900">
                 <Sparkles className="size-3.5 text-blue-600" />
                 <span>5-Minute Queue Projection</span>
               </div>
-              <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800">
+              <span className="text-[10px]   px-1.5 py-0.5 rounded bg-blue-100 text-blue-800">
                 predicted_queue_5m = max(0, current_queue + growth_rate × 5)
               </span>
             </div>
 
             {/* Arithmetic Formula Breakdown */}
-            <div className="rounded-lg bg-white p-2.5 border border-blue-100 text-xs space-y-1.5 font-mono">
+            <div className="rounded-lg bg-white p-2.5 border border-blue-100 text-xs space-y-1.5 ">
               <div className="flex items-center justify-between text-slate-700">
                 <span>Arrival rate (arrival_rate):</span>
                 <strong className="text-slate-900">{arrivalRate.toFixed(1)} / min</strong>
@@ -607,7 +675,7 @@ export const AISimulationView: React.FC = () => {
                   {growthRate > 0 ? `+${growthRate.toFixed(2)}` : growthRate.toFixed(2)} / min
                 </strong>
               </div>
-              <div className="flex items-center justify-between text-slate-900 font-bold border-t border-slate-200 pt-1">
+              <div className="flex items-center justify-between text-slate-900  border-t border-slate-200 pt-1">
                 <span>5-Minute Projection:</span>
                 <span className="text-sm text-indigo-700">
                   max(0, {queueLength} + ({growthRate > 0 ? `+${growthRate.toFixed(1)}` : growthRate.toFixed(1)} × 5)) = {predictedQueue5m}
@@ -618,7 +686,7 @@ export const AISimulationView: React.FC = () => {
             {/* Explanation Note */}
             <p className="text-[10.5px] text-blue-900/80 leading-relaxed">
               <strong>Simple Flow-Balance Projection:</strong> <code>growth_rate = arrival_rate - service_rate</code>, and <code>predicted_queue_5m = max(0, current_queue + growth_rate × 5)</code>. Estimated wait based on current queue and service capacity (operational estimate: <code>estimated_wait = current_queue / service_rate</code> ≈ {waitMinutes} min). IF predicted queue ≥ {queueAlertThreshold} AND growth rate &gt; 0, generate{' '}
-              <code className="bg-blue-100 px-1 rounded text-blue-950 font-bold">OPEN_COUNTER_4</code> directive.
+              <code className="bg-blue-100 px-1 rounded text-blue-950 ">OPEN_COUNTER_4</code> directive.
             </p>
           </div>
 
@@ -633,7 +701,7 @@ export const AISimulationView: React.FC = () => {
             }`}
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5 text-xs font-semibold">
+              <div className="flex items-center gap-1.5 text-xs ">
                 <AlertTriangle
                   className={`size-3.5 ${
                     isSurgePredicted && !counter4Open ? 'text-red-600 animate-bounce' : 'text-slate-400'
@@ -642,7 +710,7 @@ export const AISimulationView: React.FC = () => {
                 <span className="text-slate-800">Operational Counter Status</span>
               </div>
               <span
-                className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                className={`text-[10px]  px-2 py-0.5 rounded-full ${
                   counter4Open
                     ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                     : isSurgePredicted
@@ -658,20 +726,20 @@ export const AISimulationView: React.FC = () => {
             <div className="grid grid-cols-4 gap-1.5 text-center text-[10px]">
               <div className="p-1.5 rounded bg-white border border-slate-200 font-medium">
                 <span className="block text-slate-500">POS #1</span>
-                <span className="text-emerald-700 font-bold">ACTIVE</span>
+                <span className="text-emerald-700 ">ACTIVE</span>
               </div>
               <div className="p-1.5 rounded bg-white border border-slate-200 font-medium">
                 <span className="block text-slate-500">POS #2</span>
-                <span className="text-emerald-700 font-bold">ACTIVE</span>
+                <span className="text-emerald-700 ">ACTIVE</span>
               </div>
               <div className="p-1.5 rounded bg-white border border-slate-200 font-medium">
                 <span className="block text-slate-500">POS #3</span>
-                <span className="text-emerald-700 font-bold">ACTIVE</span>
+                <span className="text-emerald-700 ">ACTIVE</span>
               </div>
               <div
                 className={`p-1.5 rounded border font-medium transition-all ${
                   counter4Open
-                    ? 'bg-emerald-600 text-white border-emerald-700 font-bold'
+                    ? 'bg-emerald-600 text-white border-emerald-700 '
                     : 'bg-slate-100 text-slate-400 border-slate-200'
                 }`}
               >
@@ -684,14 +752,14 @@ export const AISimulationView: React.FC = () => {
             {isSurgePredicted && !counter4Open && (
               <div className="p-2 rounded-lg bg-red-100/90 border border-red-200 text-xs flex items-center justify-between gap-2">
                 <div className="space-y-0.5">
-                  <p className="font-bold text-red-900">Queue Surge Directive Triggered</p>
+                  <p className=" text-red-900">Queue Surge Directive Triggered</p>
                   <p className="text-[11px] text-red-800">
                     Predicted queue of {predictedQueue5m} will exceed threshold {queueAlertThreshold} in ~1.5 min.
                   </p>
                 </div>
                 <button
                   onClick={() => setManualCounter4(true)}
-                  className="px-2.5 py-1 rounded bg-red-700 text-white font-bold text-[11px] hover:bg-red-800 shrink-0 transition"
+                  className="px-2.5 py-1 rounded bg-red-700 text-white  text-[11px] hover:bg-red-800 shrink-0 transition"
                 >
                   OPEN NOW
                 </button>
@@ -701,7 +769,7 @@ export const AISimulationView: React.FC = () => {
             {counter4Open && (
               <div className="p-2 rounded-lg bg-emerald-100/90 border border-emerald-200 text-xs flex items-center justify-between gap-2">
                 <div className="space-y-0.5">
-                  <p className="font-bold text-emerald-900">Counter 4 Deployed</p>
+                  <p className=" text-emerald-900">Counter 4 Deployed</p>
                   <p className="text-[11px] text-emerald-800">
                     Service rate increased to {baseServiceRate.toFixed(1)}/min. Queue forecast stabilized to {predictedQueue5m}.
                   </p>
@@ -719,12 +787,12 @@ export const AISimulationView: React.FC = () => {
           {/* Shelf Camera Simulation (Separate Camera Event Stream) */}
           <div className="rounded-xl border border-purple-200 bg-purple-50/40 p-3 shadow-card space-y-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-purple-950">
+              <div className="flex items-center gap-1.5 text-xs  text-purple-950">
                 <Boxes className="size-3.5 text-purple-700" />
                 <span>Shelf Camera Simulation (Aisle 3 Dairy Bay sh-03)</span>
               </div>
               <span
-                className={`text-[9.5px] font-bold px-1.5 py-0.5 rounded border ${
+                className={`text-[9.5px]  px-1.5 py-0.5 rounded border ${
                   shelfState === 'EMPTY'
                     ? 'bg-red-100 text-red-800 border-red-300 animate-pulse'
                     : shelfState === 'NORMAL'
@@ -739,7 +807,7 @@ export const AISimulationView: React.FC = () => {
             <div className="rounded-lg bg-white p-2.5 border border-purple-100 text-xs space-y-1">
               <div className="flex items-center justify-between text-slate-700">
                 <span>Row 2 Empty-Space Ratio:</span>
-                <strong className={shelfRow2VoidRatio >= 0.5 ? 'text-red-600 font-bold' : 'text-slate-800'}>
+                <strong className={shelfRow2VoidRatio >= 0.5 ? 'text-red-600 ' : 'text-slate-800'}>
                   {(shelfRow2VoidRatio * 100).toFixed(0)}%
                 </strong>
               </div>
@@ -759,12 +827,12 @@ export const AISimulationView: React.FC = () => {
 
       {/* Bottom Architecture Explanation (Required Specification) */}
       <div className="rounded-xl border border-slate-200/90 bg-slate-100/80 p-3.5 shadow-2xs space-y-2">
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-800 uppercase tracking-wider">
+        <div className="flex items-center gap-2 text-xs  text-slate-800 uppercase tracking-wider">
           <ShieldCheck className="size-4 text-emerald-600" />
           <span>RetailEdge Intelligence Architecture Loop</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono font-medium text-slate-700">
+        <div className="flex flex-wrap items-center gap-1.5 text-[11px]  font-medium text-slate-700">
           <span className="px-2 py-0.5 rounded bg-white border border-slate-200">CAMERA</span>
           <ArrowRight className="size-3 text-slate-400" />
           <span className="px-2 py-0.5 rounded bg-white border border-slate-200">DETECTION</span>
@@ -779,7 +847,7 @@ export const AISimulationView: React.FC = () => {
           <ArrowRight className="size-3 text-slate-400" />
           <span className="px-2 py-0.5 rounded bg-white border border-slate-200">RECOMMENDATION</span>
           <ArrowRight className="size-3 text-slate-400" />
-          <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold">
+          <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 ">
             HUMAN ACTION
           </span>
         </div>
