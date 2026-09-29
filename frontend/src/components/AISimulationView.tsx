@@ -406,14 +406,6 @@ export const AISimulationView: React.FC = () => {
                 onLoadedMetadata={handleLoadedMetadata}
               />
 
-              {/* Prominent Overlay Notice */}
-              <div className="absolute top-2 left-2 z-10">
-                <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-black/80 backdrop-blur-xs text-[9.5px] font-mono font-semibold text-emerald-400 border border-emerald-500/40 shadow-xs">
-                  <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  SIMULATED TRACKING — ILLUSTRATIVE DEMO
-                </span>
-              </div>
-
               {/* Real Precomputed YOLO11n + ByteTrack Person Bounding Boxes */}
               {activeDetections.map((det) => {
                 const nativeW = detectionData?.video.width || 640;
