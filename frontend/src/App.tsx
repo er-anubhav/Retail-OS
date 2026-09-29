@@ -3,13 +3,14 @@ import { ShopperAnalyticsCard } from './components/ShopperAnalyticsCard';
 import { QueueIntelligenceCard } from './components/QueueIntelligenceCard';
 import { ShelfInventoryCard } from './components/ShelfInventoryCard';
 import { DirectivesFeed } from './components/DirectivesFeed';
+import { AISimulationView } from './components/AISimulationView';
 import { fetchStoreOverview, FALLBACK_OVERVIEW } from './api';
 import { StoreOverview } from './types';
-import { Users, Timer, Boxes, Footprints, AlertTriangle, Activity, Sparkles } from 'lucide-react';
+import { Users, Timer, Boxes, Footprints, AlertTriangle, Activity, Sparkles, Video } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [data, setData] = useState<StoreOverview>(FALLBACK_OVERVIEW);
-  const [activeTab, setActiveTab] = useState<'operations' | 'directives'>('operations');
+  const [activeTab, setActiveTab] = useState<'operations' | 'directives' | 'simulation'>('operations');
 
   const loadData = useCallback(async () => {
     try {
@@ -142,6 +143,25 @@ export const App: React.FC = () => {
                 {directivesCount}
               </span>
             </button>
+
+            <button
+              onClick={() => setActiveTab('simulation')}
+              className={`flex items-center gap-2 rounded-lg px-4 py-1.5 text-xs font-medium transition-all ${
+                activeTab === 'simulation'
+                  ? 'bg-white text-slate-900 shadow-2xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Video className="size-3.5 text-purple-600" />
+              <span>AI Simulation</span>
+              <span className={`rounded-full px-1.5 py-0.2 text-[9px] font-semibold ${
+                activeTab === 'simulation'
+                  ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                  : 'bg-slate-300/80 text-slate-700'
+              }`}>
+                DEMO
+              </span>
+            </button>
           </div>
         </div>
 
@@ -169,6 +189,13 @@ export const App: React.FC = () => {
               recommendations={data.recommendations}
               alerts={data.alerts}
             />
+          </div>
+        )}
+
+        {/* Tab 3: AI Simulation Console */}
+        {activeTab === 'simulation' && (
+          <div className="animate-in fade-in duration-150 w-full">
+            <AISimulationView />
           </div>
         )}
       </main>
