@@ -148,6 +148,7 @@ def update_analytics(engine, tracks, timestamp_str, video_time_sec=0.0):
                         events.append({
                             "timestamp": timestamp_str,
                             "event_type": "ENTRY",
+                            "track_id": track_id,
                             "occupancy": current_occupancy,
                             "queue_length": 0
                         })
@@ -157,6 +158,7 @@ def update_analytics(engine, tracks, timestamp_str, video_time_sec=0.0):
                         events.append({
                             "timestamp": timestamp_str,
                             "event_type": "EXIT",
+                            "track_id": track_id,
                             "occupancy": current_occupancy,
                             "queue_length": 0
                         })

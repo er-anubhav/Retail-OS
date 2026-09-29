@@ -1,11 +1,14 @@
 import argparse
+from datetime import datetime, timezone
 import json
 import os
+import sys
+import urllib.error
+import urllib.request
 # pyrefly: ignore [missing-import]
 import cv2 
 # pyrefly: ignore [missing-import]
 import numpy as np
-from datetime import datetime
 
 import config
 from detection import (
@@ -18,6 +21,123 @@ from analytics import (
     estimate_shelf_gap_heuristic, analyze_shelf_rows, draw_shelf_visuals,
     create_shelf_tracker, update_shelf_temporal
 )
+
+
+def post_event_to_backend(ai_event: dict, default_camera: str = None) -> bool:
+    """Send structured event to backend if BACKEND_EVENT_URL is set.
+    
+    Never raises exceptions; AI processing continues uninterrupted if backend is offline.
+    """
+    backend_url = os.environ.get("BACKEND_EVENT_URL", "").strip()
+    if not backend_url:
+        return False
+
+    store_id = os.environ.get("STORE_ID", "BLR-014").strip()
+    evt_type = ai_event.get("event_type")
+
+    # Map AI event type to backend EventType and camera
+    if evt_type == "ENTRY":
+        camera_id = os.environ.get("CAMERA_ENTRANCE_ID", default_camera or "CAM-01")
+        payload = {
+            "store_id": store_id,
+            "camera_id": camera_id,
+            "event_type": "person_entered",
+            "confidence": 0.95,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "data": {
+                "track_id": ai_event.get("track_id", 0),
+            }
+        }
+    elif evt_type == "EXIT":
+        camera_id = os.environ.get("CAMERA_EXIT_ID", default_camera or "CAM-11")
+        payload = {
+            "store_id": store_id,
+            "camera_id": camera_id,
+            "event_type": "person_exited",
+            "confidence": 0.95,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "data": {
+                "track_id": ai_event.get("track_id", 0),
+            }
+        }
+    elif evt_type == "QUEUE_UPDATE":
+        camera_id = os.environ.get("CAMERA_CHECKOUT_ID", default_camera or "CAM-03")
+        arr = ai_event.get("arrival_rate")
+        srv = ai_event.get("service_rate")
+        payload = {
+            "store_id": store_id,
+            "camera_id": camera_id,
+            "event_type": "queue_update",
+            "confidence": 0.90,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "data": {
+                "queue_length": int(ai_event.get("queue_length", 0)),
+                "arrival_rate": float(arr) if arr is not None else 0.0,
+                "service_rate": float(srv) if srv is not None else 0.0,
+                "open_counters": int(ai_event.get("open_counters", 1)),
+            }
+        }
+    else:
+        return False
+
+    try:
+        req_data = json.dumps(payload).encode("utf-8")
+        req = urllib.request.Request(
+            backend_url,
+            data=req_data,
+            headers={"Content-Type": "application/json", "User-Agent": "EdgeAI-Retail/1.0"},
+            method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=2.0) as resp:
+            return resp.status in (200, 201)
+    except Exception:
+        # Backend failure must never terminate the AI pipeline
+        return False
+
+
+def post_shelf_to_backend(gap_analysis: dict) -> bool:
+    """Send shelf analysis and alert to backend if BACKEND_EVENT_URL is set."""
+    backend_url = os.environ.get("BACKEND_EVENT_URL", "").strip()
+    if not backend_url:
+        return False
+
+    store_id = os.environ.get("STORE_ID", "BLR-014").strip()
+    camera_id = os.environ.get("CAMERA_SHELF_ID", "CAM-02").strip()
+    shelf_id = os.environ.get("SHELF_ID", "sh-01").strip()
+
+    state = gap_analysis.get("state", "NORMAL")
+    if state == "EMPTY":
+        event_type = "shelf_empty"
+    elif state == "LOW":
+        event_type = "shelf_low"
+    else:
+        event_type = "shelf_normal"
+
+    payload = {
+        "store_id": store_id,
+        "camera_id": camera_id,
+        "event_type": event_type,
+        "confidence": 0.90,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "data": {
+            "shelf_id": shelf_id,
+            "empty_ratio": float(gap_analysis.get("overall", {}).get("empty_space_ratio", 0.0)),
+            "void_count": int(gap_analysis.get("overall", {}).get("void_count", 0)),
+        }
+    }
+
+    try:
+        req_data = json.dumps(payload).encode("utf-8")
+        req = urllib.request.Request(
+            backend_url,
+            data=req_data,
+            headers={"Content-Type": "application/json", "User-Agent": "EdgeAI-Retail/1.0"},
+            method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=2.0) as resp:
+            return resp.status in (200, 201)
+    except Exception:
+        return False
 
 
 def draw_visuals(frame, tracks, state, entrance_line, checkout_roi):
@@ -127,6 +247,8 @@ def process_video(video_path: str, output_dir: str = config.OUTPUT_DIR):
         # Footfall, occupancy, and queue analytics using video time
         events, state = update_analytics(analytics_engine, tracks, timestamp_str, video_time_sec)
         all_events.extend(events)
+        for ev in events:
+            post_event_to_backend(ev)
 
         # Annotation and video writing
         visual_frame = draw_visuals(frame, tracks, state, config.ENTRANCE_LINE, config.CHECKOUT_ROI)
@@ -230,6 +352,9 @@ def process_shelf(shelf_image_path: str, output_dir: str = config.OUTPUT_DIR):
     with open(shelf_out_path, "w") as f:
         json.dump(output_data, f, indent=2)
 
+    # Forward shelf event to backend if BACKEND_EVENT_URL is set
+    post_shelf_to_backend(gap_analysis)
+
     print("\n=== Localized Shelf Gap Analysis (Row-Relative & Temporal) ===")
     print(f"Image:                 {shelf_image_path}")
     print(f"Instantaneous State:   {gap_analysis['state']}")
@@ -264,7 +389,16 @@ def process_shelf(shelf_image_path: str, output_dir: str = config.OUTPUT_DIR):
     print(f"Saved annotated shelf visual to: {shelf_img_path}")
 
 
-def evaluate_shelves(eval_dir: str = config.DEFAULT_SHELF_EVAL_DIR, output_dir: str = config.OUTPUT_DIR):
+def evaluate_shelves(eval_dir: str = config.DEFAULT_SHELF_EVAL_DIR, output_dir: str = config.OUTPUT_DIR) -> bool:
+    if not os.path.isdir(eval_dir):
+        print(f"\n[Error] Shelf evaluation dataset directory not found: {eval_dir}")
+        print("Expected evaluation images (.jpg/.png) or a 'manifest.json' dataset cache in this folder.")
+        print("To run shelf evaluation, populate the directory or specify a custom path:")
+        print("    python main.py --shelf-eval --eval-dir /path/to/evaluation_images")
+        print("\nTo evaluate an individual shelf image instead, run:")
+        print("    python main.py --shelf <path/to/image.jpg>\n")
+        return False
+
     os.makedirs(output_dir, exist_ok=True)
     manifest_path = os.path.join(eval_dir, "manifest.json")
 
@@ -384,6 +518,7 @@ def evaluate_shelves(eval_dir: str = config.DEFAULT_SHELF_EVAL_DIR, output_dir: 
     with open(out_path, "w") as f:
         json.dump(summary_data, f, indent=2)
     print(f"\nSaved benchmark results to: {out_path}\n")
+    return True
 
 
 def test_shelf_temporal_logic():
@@ -444,7 +579,9 @@ def main():
     if args.shelf_test:
         test_shelf_temporal_logic()
     elif args.shelf_eval:
-        evaluate_shelves(args.eval_dir, args.output_dir)
+        success = evaluate_shelves(args.eval_dir, args.output_dir)
+        if not success:
+            sys.exit(1)
     elif args.shelf:
         process_shelf(args.shelf, args.output_dir)
     elif args.input:
