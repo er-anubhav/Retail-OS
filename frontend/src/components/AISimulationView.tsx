@@ -153,7 +153,7 @@ export const AISimulationView: React.FC = () => {
     baseServiceRate = counter4Open ? 2.2 : 1.2;
   }
 
-  // Exact Rule-Based Little's Law Calculations
+  // Exact Rule-Based Flow-Balance Queue Calculations
   const growthRate = Number((arrivalRate - baseServiceRate).toFixed(2));
   const predictedQueue5m = Math.max(0, Math.round(queueLength + growthRate * 5));
   const queueAlertThreshold = 8;
@@ -222,7 +222,7 @@ export const AISimulationView: React.FC = () => {
       time: 6.0,
       timeLabel: '00:06.0',
       badge: 'PREDICTION',
-      title: "Little's Law Projection: 12 People in 5m",
+      title: "5-Minute Queue Projection: 12 People",
       detail: 'Arrival (2.4/m) > Service (1.2/m). Net growth +1.2/min.',
     },
     {
@@ -262,10 +262,7 @@ export const AISimulationView: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-amber-950 uppercase tracking-wider">
-                Simulation Mode
-              </span>
-              <span className="rounded bg-amber-200/80 px-1.5 py-0.2 text-[10px] font-semibold text-amber-900 border border-amber-300">
-                OFFLINE DEMONSTRATION
+                SIMULATION MODE — OFFLINE DEMONSTRATION
               </span>
             </div>
             <p className="text-[11px] text-amber-900/90 mt-0.5">
@@ -574,53 +571,53 @@ export const AISimulationView: React.FC = () => {
 
               <div className="p-2 rounded-lg bg-slate-50 border border-slate-200/80">
                 <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-medium">
-                  Wait Estimate
+                  Estimated Wait
                 </span>
                 <span className="text-lg font-bold text-blue-700 block mt-0.5">~{waitMinutes}m</span>
-                <span className="text-[9.5px] text-slate-500 block">Little's Law W = L/λ</span>
+                <span className="text-[9.5px] text-slate-500 block">Operational Estimate</span>
               </div>
             </div>
           </div>
 
-          {/* Mathematical Rule Explanation (Core Request) */}
+          {/* Mathematical Rule Explanation (Flow-Balance Queue Growth Projection) */}
           <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-3 shadow-card space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-900">
                 <Sparkles className="size-3.5 text-blue-600" />
-                <span>Explainable Little's Law Projection</span>
+                <span>5-Minute Queue Projection</span>
               </div>
               <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800">
-                Q(t+5m) = max(0, Q + Δ·5)
+                predicted_queue_5m = max(0, current_queue + growth_rate × 5)
               </span>
             </div>
 
             {/* Arithmetic Formula Breakdown */}
             <div className="rounded-lg bg-white p-2.5 border border-blue-100 text-xs space-y-1.5 font-mono">
               <div className="flex items-center justify-between text-slate-700">
-                <span>Arrival rate (λ):</span>
+                <span>Arrival rate (arrival_rate):</span>
                 <strong className="text-slate-900">{arrivalRate.toFixed(1)} / min</strong>
               </div>
               <div className="flex items-center justify-between text-slate-700">
-                <span>Service capacity (μ):</span>
+                <span>Service capacity (service_rate):</span>
                 <strong className="text-slate-900">{baseServiceRate.toFixed(1)} / min</strong>
               </div>
               <div className="flex items-center justify-between text-slate-700 border-t border-slate-100 pt-1">
-                <span>Net Growth (λ - μ):</span>
+                <span>growth_rate = arrival_rate - service_rate:</span>
                 <strong className={growthRate > 0 ? 'text-amber-600' : 'text-emerald-600'}>
                   {growthRate > 0 ? `+${growthRate.toFixed(2)}` : growthRate.toFixed(2)} / min
                 </strong>
               </div>
               <div className="flex items-center justify-between text-slate-900 font-bold border-t border-slate-200 pt-1">
-                <span>5-Min Forecast:</span>
+                <span>5-Minute Projection:</span>
                 <span className="text-sm text-indigo-700">
-                  {queueLength} + ({growthRate > 0 ? `+${growthRate.toFixed(1)}` : growthRate.toFixed(1)} × 5) = {predictedQueue5m}
+                  max(0, {queueLength} + ({growthRate > 0 ? `+${growthRate.toFixed(1)}` : growthRate.toFixed(1)} × 5)) = {predictedQueue5m}
                 </span>
               </div>
             </div>
 
             {/* Explanation Note */}
             <p className="text-[10.5px] text-blue-900/80 leading-relaxed">
-              <strong>Rule Logic:</strong> IF predicted queue ≥ {queueAlertThreshold} AND growth rate &gt; 0, generate{' '}
+              <strong>Simple Flow-Balance Projection:</strong> <code>growth_rate = arrival_rate - service_rate</code>, and <code>predicted_queue_5m = max(0, current_queue + growth_rate × 5)</code>. Estimated wait based on current queue and service capacity (operational estimate: <code>estimated_wait = current_queue / service_rate</code> ≈ {waitMinutes} min). IF predicted queue ≥ {queueAlertThreshold} AND growth rate &gt; 0, generate{' '}
               <code className="bg-blue-100 px-1 rounded text-blue-950 font-bold">OPEN_COUNTER_4</code> directive.
             </p>
           </div>
@@ -788,7 +785,7 @@ export const AISimulationView: React.FC = () => {
         </div>
 
         <p className="text-xs text-slate-600 leading-relaxed pt-1 border-t border-slate-200/80">
-          <strong>Note:</strong> Simulation Mode demonstrates the decision loop using deterministic rule-based signals synchronized with the demonstration video.
+          <strong>Note:</strong> SIMULATION MODE — OFFLINE DEMONSTRATION illustrates the intelligence loop using deterministic rule-based signals synchronized with the demonstration video. The video is not processed by the real YOLO pipeline.
         </p>
       </div>
     </div>
