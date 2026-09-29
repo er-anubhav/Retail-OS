@@ -1,148 +1,145 @@
-# Intelligent Retail Analytic System (RetailEdge AI)
+# RetailEdge AI — Intelligent Retail Analytic System
+**SIH 2026 Problem Statement 26179**
 
-An end-to-end edge-to-cloud intelligence platform for physical retail stores. Existing CCTV cameras feed an edge computer vision pipeline that tracks customer flows, predicts checkout queue bottlenecks, and detects shelf stock depletion. Anonymous, structured events are ingested by a high-throughput backend and displayed on a modern neobrutalist store manager dashboard.
+An edge-to-dashboard intelligence platform for physical retail operations. The system processes existing in-store camera streams on-device to track footfall, project checkout queue bottlenecks, and detect shelf void depletion without transmitting or recording raw video.
 
 ---
 
-## Repository Structure
+## 1. Project Overview
 
-The project is structured into three clean, decoupled subsystems:
+The system operates across a clear 5-stage data flow:
 
 ```
-.
-├── frontend/                     # Neobrutalist Store Operations Dashboard
-│   ├── src/                      # React 18 + TypeScript + Vite 6 + Tailwind CSS
-│   ├── package.json              # Web dependencies & scripts
-│   ├── vite.config.ts            # Vite config with API proxy to backend
-│   └── README.md                 # Frontend architecture and setup guide
-│
-├── backend/                      # Event Ingestion, REST & WebSocket Services
-│   ├── app/                      # FastAPI application
-│   │   ├── api/                  # REST routes and per-store WebSockets
-│   │   ├── core/                 # Config, MongoDB (Motor) connection & seeding
-│   │   ├── intelligence/         # Queue projection math & recommendation engine
-│   │   ├── models/               # Pydantic schema contracts & privacy rules
-│   │   └── services/             # Mongo queries, alert lifecycles & metric rollup
-│   ├── requirements.txt          # Python dependencies
-│   ├── .env.example              # Environment template
-│   └── README.md                 # Backend setup, API endpoints & edge contracts
-│
-├── ai-ml/                        # Computer Vision & Edge Intelligence
-│   ├── main.py                   # CLI entrypoint for video & shelf pipelines
-│   ├── detection.py              # YOLO11n person & localized shelf-gap detectors
-│   ├── tracking.py               # ByteTrack anonymous multi-object tracker
-│   ├── analytics.py              # Flow counting, queue metrics, temporal smoothing
-│   ├── config.py                 # Edge ROI definitions & pipeline thresholds
-│   ├── requirements.txt          # PyTorch, Ultralytics, OpenCV dependencies
-│   └── README.md                 # CV pipeline documentation & evaluation benchmarks
-│
-├── docs/                         # Architecture, System Design & Planning Specs
-│   ├── system-design-plan.md     # Full architectural specification
-│   ├── MVP-POC-Plan.md           # Milestone & execution roadmap
-│   ├── RetailEdge-AI-System-Design-Plan.pdf
-│   └── retail-intelligence-market-research.md
-│
-└── ai -> ai-ml                   # Backward-compatibility symlink
+[In-Store Camera Feed]
+        │  (RTSP / MP4 / Video Stream)
+        ▼
+[Edge AI Engine (ai-ml/)]
+        │  - YOLO11n person detection & ByteTrack tracking
+        │  - Checkout ROI polygon testing & Little's Law queue projection
+        │  - Row-relative retail shelf-gap void detection
+        ▼
+[Structured Telemetry Events]
+        │  - person_entered / person_exited
+        │  - queue_update (queue length, arrival & service rates)
+        │  - shelf_empty / shelf_low / shelf_normal
+        ▼
+[Backend API (backend/)]
+        │  - FastAPI event ingestion (POST /api/events)
+        │  - Privacy validator (token-level rejection of facial/biometric data)
+        │  - MongoDB state persistence & deterministic recommendation engine
+        ▼
+[Operations Dashboard (frontend/)]
+           - Live occupancy, rush hours, queue projections, shelf status & staff directives
 ```
 
 ---
 
-## Subsystem Overviews
+## 2. Requirements
 
-### 1. Frontend (`frontend/`)
-- **Technology**: React 18, TypeScript, Vite 6, Tailwind CSS 3, Lucide icons.
-- **Aesthetic**: Neobrutalist design system with high-contrast borders, solid offset shadows, and semantic color signaling (Lime: normal, Coral: critical, Yellow: warning, Blue: info, Purple: AI/analytics).
-- **Functionality**:
-  - Live store overview with key performance indicators and active alerts.
-  - Queue analytics with real-time rate monitoring and projection formulas.
-  - Shelf inventory health and bay-level stock indicators.
-  - Actionable recommendation cards with one-click staff dispatch.
-  - Zero-latency same-origin development proxy to the FastAPI backend.
-
-### 2. Backend (`backend/`)
-- **Technology**: FastAPI (Python 3.10+), Uvicorn, MongoDB with Motor (async PyMongo).
-- **Functionality**:
-  - **Edge Ingestion**: `POST /api/events` ingests anonymous structured event detections with deduplication and privacy validation.
-  - **Privacy Enforcement**: Model-level validation rejects any payloads containing biometric or PII attributes (face, identity, images).
-  - **Intelligence Engine**: Deterministic queue forecasting ($Q(t + \Delta t) = \max(0, Q(t) + (\lambda - \mu) \cdot \Delta t)$) and automatic recommendation generation.
-  - **WebSockets & Polling**: Dual delivery mode supporting WebSocket broadcasts (`/api/ws/{store_id}`) and 5s polling REST endpoints for network resilience.
-
-### 3. AI / ML (`ai-ml/`)
-- **Technology**: PyTorch, Ultralytics YOLO11n, ByteTrack, Hugging Face Transformers.
-- **Functionality**:
-  - **Person Tracking**: Anonymous track persistence across video frames without storing facial or biometric identifiers.
-  - **Queue Intelligence**: Virtual checkout ROI occupancy, video-time arrival/departure rate estimation, and debounced state transitions.
-  - **Row-Relative Shelf Intelligence**: Multi-row shelf ROI estimation, localized void bounding-box detection, row-relative empty space calculation, and temporal smoothing to prevent flicker alerts.
+- **Python**: Version 3.10, 3.11, or 3.12
+- **Node.js**: Version 18.x or 20.x (with `npm` 9+)
+- **Database**: MongoDB 6.0+ (running locally on `mongodb://localhost:27017`)
+- **Key Dependencies**:
+  - **Backend**: `fastapi`, `uvicorn`, `motor`, `pydantic`, `pydantic-settings`, `pymongo`
+  - **Frontend**: `react`, `react-dom`, `recharts`, `lucide-react`, `tailwindcss`, `vite`
+  - **AI / ML**: `torch`, `torchvision`, `ultralytics`, `opencv-python`, `transformers`, `huggingface-hub`, `numpy`
 
 ---
 
-## Quick Start Guide
+## 3. System Startup (Terminal by Terminal)
 
-### Step 1: Start the Backend
+Open separate terminals for each subsystem:
 
+### Terminal 1: MongoDB Service
+Ensure MongoDB is running locally on port 27017:
+```bash
+# On Linux (systemd):
+sudo systemctl start mongod
+
+# Or via Docker:
+docker run -d --name mongo-retail -p 27017:27017 mongo:latest
+```
+
+### Terminal 2: Backend API
 ```bash
 cd backend
+
+# Create and activate virtual environment (or use project root .venv)
 python -m venv .venv
 source .venv/bin/activate    # On Windows: .venv\Scripts\activate
+
+# Install dependencies and start server
 pip install -r requirements.txt
 cp .env.example .env
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
-*API will be available at `http://127.0.0.1:8000` with Swagger docs at `http://127.0.0.1:8000/docs`.*
+*API will be available at `http://127.0.0.1:8000` with Swagger UI at `http://127.0.0.1:8000/docs`.*
 
-### Step 2: Start the Frontend
-
+### Terminal 3: Frontend Operations Dashboard
 ```bash
 cd frontend
+
+# Install packages and start Vite dev server
 npm install
 npm run dev
 ```
-*Frontend will be available at `http://localhost:5173`.*
+*Dashboard will be available at `http://localhost:5173` (proxies `/api` requests to backend at `http://127.0.0.1:8000`).*
 
-### Step 3: Run AI/ML Pipeline or Synthetic Tests
-
+### Terminal 4: Edge AI Pipeline Demo
 ```bash
 cd ai-ml
-# Or use the backward-compatibility alias: cd ai
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
 
-# Run synthetic shelf smoothing and alert transition tests:
+# Activate virtual environment
+source ../.venv/bin/activate   # or local .venv
+
+# Optional: configure backend bridge URL to send live events to the dashboard
+export BACKEND_EVENT_URL="http://127.0.0.1:8000/api/events"
+export STORE_ID="BLR-014"
+```
+
+---
+
+## 4. AI Verification & Demo Commands
+
+Run these commands from the `ai-ml/` directory:
+
+### 1. Synthetic Temporal Smoothing Validation
+```bash
 python main.py --shelf-test
+```
+*Demonstrates 8 unit test cases verifying state transition smoothing and duplicate alert suppression.*
 
-# Run video analytics on a store camera feed:
-python main.py --input path/to/store_feed.mp4
+### 2. Retail Shelf-Gap Void Analysis
+```bash
+python main.py --shelf outputs/shelf_annotated.jpg
+```
+*Demonstrates row-relative void detection, bounding boxes, empty-space ratio calculation, and automatic state evaluation.*
 
-# Run localized shelf-gap detection on a shelf image:
-python main.py --shelf path/to/shelf_image.jpg
+### 3. Shopper Tracking & Queue Intelligence
+```bash
+python main.py --input outputs/processed_video.mp4
+```
+*Demonstrates YOLO11n person detection, ByteTrack anonymous tracking, entrance line crossing footfall counters, checkout ROI queue estimation, and Little's Law queue prediction.*
+
+### 4. CLI Argument Reference
+```bash
+python main.py --help
 ```
 
 ---
 
-## Data Flow Contract
+## 5. Model Weights & Artifact Management
 
-```
-[Store Cameras]
-      │
-      ▼
-┌──────────────┐      Structured Events (POST /api/events)      ┌──────────────┐
-│  ai-ml/      │ ─────────────────────────────────────────────► │  backend/    │
-│  (Edge CV)   │   - person_entered / person_exited             │  (FastAPI +  │
-│              │   - queue_update (length, arrival/departure)   │   MongoDB)   │
-│              │   - shelf_empty / shelf_low / shelf_normal     └──────┬───────┘
-└──────────────┘                                                       │
-                                                                       │ REST / WS
-                                                                       ▼
-                                                                ┌──────────────┐
-                                                                │  frontend/   │
-                                                                │  (React UI)  │
-                                                                └──────────────┘
-```
+- **YOLO11n Weights**: Downloaded automatically by Ultralytics into `ai-ml/yolo11n.pt` on first run (5.6 MB).
+- **Shelf-Gap Model**: Pretrained void detector `akul-29/Retail-Shelf-Gap-Detection_Model` (`best.pt`) downloaded directly via Hugging Face Hub cache (`~/.cache/huggingface/hub/`).
+- **SigLIP Classifier**: Downloaded via Hugging Face Transformers cache (`google/siglip-base-patch16-224`).
+- **Repository Hygiene**: Model weights (`*.pt`, `*.bin`, `*.onnx`), video files (`*.mp4`), and `.env` credentials are strictly excluded via `.gitignore` and are not committed.
 
 ---
 
-## License & Compliance
+## 6. Privacy & Edge Principles
 
-- **Privacy First**: Raw video frames are processed at the edge in volatile memory and never transmitted or persisted. Tracks are assigned ephemeral IDs.
-- **Hackathon Demo Ready**: Pre-seeded demo stores (`BLR-014`, `BLR-021`, `HYD-007`, `MUM-032`) and credentials (`manager@retail.ai` / `password123`).
+- **Local Video Processing**: Video frames are analyzed in volatile memory (`numpy.ndarray`) at the edge. No raw video is streamed to or stored in the cloud.
+- **Anonymous Tracking**: ByteTrack assigns temporary integer IDs (`1, 2, ...`). No facial recognition, biometric embeddings, or person identities are created.
+- **Strict Data Contracts**: The backend validates every event payload using token-level inspection and rejects any payload containing personal or biometric fields (`face`, `biometric`, `name`, etc.).
+- **Minimal Cloud Surface**: Only anonymous structured telemetry (`person_entered`, `queue_length: 5`, `shelf_empty`) is transmitted upstream.
