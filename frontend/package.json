@@ -1,9 +1,9 @@
 {
-  "name": "retail-ai",
+  "name": "retayl-edge-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "RETAIL//AI — AI-powered retail intelligence platform (neobrutalist UI prototype)",
+  "description": "RetailEdge AI — Edge Store Analytics Dashboard",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -11,12 +11,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@fontsource-variable/space-grotesk": "^5.1.1",
-    "@fontsource/ibm-plex-mono": "^5.1.1",
     "lucide-react": "^0.469.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.0",
     "recharts": "^2.15.0"
   },
   "devDependencies": {

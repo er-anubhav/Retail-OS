@@ -1,19 +1,18 @@
 # Retail Intelligence Frontend
 
-A neobrutalist React + TypeScript frontend for the Retail Intelligence Platform.
+A unified store operations dashboard for the Retail Intelligence Platform (SIH 2026 Problem Statement 26179).
 
-Existing store cameras feed an edge device that runs computer vision, turns people into anonymous tracks, and emits structured events — which become dashboards, alerts, predictions, and staff instructions.
+The frontend displays real-time telemetry, queue wait projections, inventory status, and actionable store directives received from the backend edge intelligence pipeline.
 
 ---
 
 ## Tech Stack
 
-- **Framework**: React 18 + TypeScript (strict)
+- **Framework**: React 18 + TypeScript
 - **Build**: Vite 6
-- **Styling**: Tailwind CSS with custom neobrutalist tokens (high contrast, 3-4px borders, hard offset shadows)
-- **Icons**: lucide-react
-- **Routing**: react-router-dom
-- **Typography**: Space Grotesk + IBM Plex Mono
+- **Styling**: Tailwind CSS (clean, responsive operations dashboard)
+- **Charts**: Recharts
+- **Icons**: Lucide React
 
 ---
 
@@ -23,22 +22,15 @@ Existing store cameras feed an edge device that runs computer vision, turns peop
 frontend/
 ├── src/
 │   ├── components/
-│   │   ├── brutal/        # Neobrutalist design system primitives
-│   │   ├── charts/        # Brutalist chart wrappers
-│   │   └── layout/        # AppShell, Navbar, Sidebar, Page wrappers
-│   ├── lib/
-│   │   ├── api.ts         # REST API client & backend response types
-│   │   ├── app-state.tsx  # Global state (time window, drawer, motion)
-│   │   ├── auth.tsx       # Auth provider & session management
-│   │   ├── data.tsx       # Polling provider & backend view-model adapters
-│   │   ├── mock-data.ts   # Store map layout references
-│   │   ├── tone.ts        # Semantic color tokens
-│   │   ├── types.ts       # Domain & view model types
-│   │   └── utils.ts       # Styling utilities
-│   ├── pages/             # Overview, Queue, Inventory, Alerts, Recommendations, SignIn
-│   ├── App.tsx
-│   ├── index.css
-│   └── main.tsx
+│   │   ├── DirectivesFeed.tsx        # Actionable store directives and operational recommendations
+│   │   ├── QueueIntelligenceCard.tsx # Real-time queue length, Little's Law prediction & counter status
+│   │   ├── ShelfInventoryCard.tsx    # Shelf availability grid across store categories
+│   │   └── ShopperAnalyticsCard.tsx  # Store occupancy, hourly footfall rush & flow charts
+│   ├── api.ts                        # Polling REST client for /api/stores/{store_id}/overview
+│   ├── types.ts                      # TypeScript data contracts & schema interfaces
+│   ├── App.tsx                       # Root operations dashboard layout & polling lifecycle
+│   ├── index.css                     # Tailwind styling directives & fonts
+│   └── main.tsx                      # React root entrypoint
 ├── index.html
 ├── package.json
 ├── tailwind.config.js

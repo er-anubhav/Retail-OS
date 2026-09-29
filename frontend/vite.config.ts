@@ -20,15 +20,4 @@ export default defineConfig({
       },
     },
   },
-  build: {
-    // Recharts is the heaviest dependency by far — keep it off the critical path.
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
-          charts: ['recharts'],
-        },
-      },
-    },
-  },
 });
