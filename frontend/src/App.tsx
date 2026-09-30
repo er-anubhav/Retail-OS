@@ -83,11 +83,11 @@ export const App: React.FC = () => {
             </a>
 
             <a
-              href="/docs/SIH26179_Idea_Presentation.pdf"
+              href="/SIH26179_VERCEL.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors shadow-2xs"
-              title="View SIH 2026 Idea Presentation (PDF)"
+              title="View SIH 2026 Idea Presentation (SIH26179_VERCEL.pdf)"
             >
               <FileText className="size-3 text-emerald-700" />
               <span>SIH Pitch (PDF)</span>

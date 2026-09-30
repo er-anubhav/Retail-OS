@@ -19,7 +19,7 @@
 |---|---|---|
 | 🌐 **Live Operations Platform** | **[dmart-retail-os.vercel.app](https://dmart-retail-os.vercel.app/)** | Live Vercel deployment with real-world 7-camera CCTV grid & telemetry |
 | 🎥 **Prototype Video Walkthrough** | **[Watch on Google Drive](https://drive.google.com/file/d/18sxWiuMnWPeHrGkHLboR7Ilf_cLvF4tA/view)** | End-to-end video recording demonstrating detection, queues, and dashboard |
-| 📑 **SIH Idea Presentation (PDF)** | **[docs/SIH26179_Idea_Presentation.pdf](docs/SIH26179_Idea_Presentation.pdf)** | Official 6-slide SIH 2026 pitch presentation submitted for Problem 26179 |
+| 📑 **SIH Idea Presentation (PDF)** | **[docs/SIH26179_VERCEL.pdf](docs/SIH26179_VERCEL.pdf)** · **[Live PDF Link](https://dmart-retail-os.vercel.app/SIH26179_VERCEL.pdf)** | Official 6-slide SIH 2026 pitch presentation (Team VERCEL · ID 166870) |
 | 📊 **SIH Idea Presentation (PPTX)** | **[docs/SIH26179_Idea_Presentation.pptx](docs/SIH26179_Idea_Presentation.pptx)** | Editable PowerPoint pitch deck |
 | 📝 **Detailed Engineering Report** | **[Open on Google Docs](https://docs.google.com/document/d/1KF_REZteJivsuR9ufB4jvx7c8vcf6goF/edit?usp=sharing&ouid=102527121718092635333&rtpof=true&sd=true)** | Complete system design, architecture specifications, and market research |
 | 📄 **System Design Plan (PDF)** | **[docs/RetailEdge-AI-System-Design-Plan.pdf](docs/RetailEdge-AI-System-Design-Plan.pdf)** | Engineering specifications and edge hardware optimization whitepaper |
