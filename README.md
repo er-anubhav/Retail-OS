@@ -3,10 +3,27 @@
 **Flagship Deployment: DMart Beta 2 · Greater Noida**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-dmart--retail--os.vercel.app-008248?style=for-the-badge&logo=vercel&logoColor=white)](https://dmart-retail-os.vercel.app)
+[![Prototype Video](https://img.shields.io/badge/Prototype%20Video-Google%20Drive-FFB300?style=for-the-badge&logo=google-drive&logoColor=black)](https://drive.google.com/file/d/18sxWiuMnWPeHrGkHLboR7Ilf_cLvF4tA/view)
+[![Pitch Deck](https://img.shields.io/badge/Pitch%20Deck-SIH%20Presentation%20PDF-E53935?style=for-the-badge&logo=adobe-acrobat-reader&logoColor=white)](docs/SIH26179_Idea_Presentation.pdf)
+[![Detailed Report](https://img.shields.io/badge/Detailed%20Report-Google%20Docs-1A73E8?style=for-the-badge&logo=google-docs&logoColor=white)](https://docs.google.com/document/d/1KF_REZteJivsuR9ufB4jvx7c8vcf6goF/edit?usp=sharing&ouid=102527121718092635333&rtpof=true&sd=true)
 [![React 18](https://img.shields.io/badge/Frontend-React%2018%20%7C%20Vite%20%7C%20TypeScript-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI%20%7C%20Python%203.11-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![YOLO11](https://img.shields.io/badge/Edge%20AI-YOLO11n%20%7C%20Ultralytics-FF6F00?style=for-the-badge&logo=yolo&logoColor=white)](https://docs.ultralytics.com)
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB%206.0+-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
+
+---
+
+### 🏆 SIH 2026 Official Submission Links & Artifacts
+
+| Resource | Direct Link | Description |
+|---|---|---|
+| 🌐 **Live Operations Platform** | **[dmart-retail-os.vercel.app](https://dmart-retail-os.vercel.app/)** | Live Vercel deployment with real-world 7-camera CCTV grid & telemetry |
+| 🎥 **Prototype Video Walkthrough** | **[Watch on Google Drive](https://drive.google.com/file/d/18sxWiuMnWPeHrGkHLboR7Ilf_cLvF4tA/view)** | End-to-end video recording demonstrating detection, queues, and dashboard |
+| 📑 **SIH Idea Presentation (PDF)** | **[docs/SIH26179_Idea_Presentation.pdf](docs/SIH26179_Idea_Presentation.pdf)** | Official 6-slide SIH 2026 pitch presentation submitted for Problem 26179 |
+| 📊 **SIH Idea Presentation (PPTX)** | **[docs/SIH26179_Idea_Presentation.pptx](docs/SIH26179_Idea_Presentation.pptx)** | Editable PowerPoint pitch deck |
+| 📝 **Detailed Engineering Report** | **[Open on Google Docs](https://docs.google.com/document/d/1KF_REZteJivsuR9ufB4jvx7c8vcf6goF/edit?usp=sharing&ouid=102527121718092635333&rtpof=true&sd=true)** | Complete system design, architecture specifications, and market research |
+| 📄 **System Design Plan (PDF)** | **[docs/RetailEdge-AI-System-Design-Plan.pdf](docs/RetailEdge-AI-System-Design-Plan.pdf)** | Engineering specifications and edge hardware optimization whitepaper |
+| 💻 **GitHub Repository** | **[github.com/er-anubhav/Retail-OS](https://github.com/er-anubhav/Retail-OS)** | Complete source code (frontend, backend, edge AI vision pipelines) |
 
 ---
 

@@ -7,7 +7,7 @@ import { AISimulationView } from './components/AISimulationView';
 import { RealWorldExampleView } from './components/RealWorldExampleView';
 import { fetchStoreOverview, FALLBACK_OVERVIEW } from './api';
 import { StoreOverview } from './types';
-import { Users, Timer, Boxes, Footprints, AlertTriangle, Activity, Sparkles, Video, Camera } from 'lucide-react';
+import { Users, Timer, Boxes, Footprints, AlertTriangle, Activity, Sparkles, Video, Camera, FileText, ExternalLink, Play, Github } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [data, setData] = useState<StoreOverview>(FALLBACK_OVERVIEW);
@@ -67,6 +67,53 @@ export const App: React.FC = () => {
                 On-Device Computer Vision & Little's Law Retail-OS Platform
               </p>
             </div>
+          </div>
+
+          {/* SIH 2026 Resource Quick Links */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <a
+              href="https://drive.google.com/file/d/18sxWiuMnWPeHrGkHLboR7Ilf_cLvF4tA/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors shadow-2xs"
+              title="Watch Prototype Video on Google Drive"
+            >
+              <Play className="size-3 text-amber-600 fill-amber-600" />
+              <span>Video Demo</span>
+            </a>
+
+            <a
+              href="/docs/SIH26179_Idea_Presentation.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors shadow-2xs"
+              title="View SIH 2026 Idea Presentation (PDF)"
+            >
+              <FileText className="size-3 text-emerald-700" />
+              <span>SIH Pitch (PDF)</span>
+            </a>
+
+            <a
+              href="https://docs.google.com/document/d/1KF_REZteJivsuR9ufB4jvx7c8vcf6goF/edit?usp=sharing&ouid=102527121718092635333&rtpof=true&sd=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors shadow-2xs"
+              title="View Detailed System & Engineering Report"
+            >
+              <ExternalLink className="size-3 text-blue-700" />
+              <span>Detailed Report</span>
+            </a>
+
+            <a
+              href="https://github.com/er-anubhav/Retail-OS"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors shadow-2xs"
+              title="View GitHub Repository"
+            >
+              <Github className="size-3 text-slate-800" />
+              <span>GitHub</span>
+            </a>
           </div>
         </header>
 
