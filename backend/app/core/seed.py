@@ -22,8 +22,8 @@ PRIMARY_STORE_ID = "BLR-014"
 STORES: list[dict[str, Any]] = [
     {
         "store_id": "BLR-014",
-        "name": "Bengaluru · Indiranagar",
-        "city": "Bengaluru",
+        "name": "DMart Beta 2 · Greater Noida",
+        "city": "Greater Noida",
         "area_sqft": 4200,
         "timezone": "Asia/Kolkata",
         "status": "active",

@@ -1,0 +1,1769 @@
+{
+  "camera_id": "CAM-02",
+  "name": "Camera 02",
+  "zone": "",
+  "type": "shelf",
+  "shelf_id": "sh-01",
+  "video_url": "/real-world/cam2.mp4",
+  "resolution": {
+    "width": 848,
+    "height": 478
+  },
+  "native_fps": 59.7,
+  "duration": 22.97,
+  "sample_fps": 3.0,
+  "roi_config": {
+    "entrance_line": null,
+    "checkout_roi": null
+  },
+  "summary": {
+    "peak_occupancy": 0,
+    "peak_queue": 0,
+    "entries": 0,
+    "exits": 0,
+    "avg_voids": 1.6,
+    "status": "ONLINE"
+  },
+  "frames": [
+    {
+      "t": 0.0,
+      "frame_idx": 0,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.24,
+          "bbox": [
+            314.0,
+            238.7,
+            379.2,
+            283.6
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 0.335,
+      "frame_idx": 20,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.26,
+          "bbox": [
+            314.2,
+            235.7,
+            381.1,
+            278.3
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.24,
+          "bbox": [
+            692.9,
+            73.0,
+            733.9,
+            205.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 0.67,
+      "frame_idx": 40,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.26,
+          "bbox": [
+            316.3,
+            234.0,
+            386.1,
+            275.2
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            381.4,
+            34.9,
+            416.3,
+            67.5
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 1.005,
+      "frame_idx": 60,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            316.0,
+            231.2,
+            385.7,
+            275.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 1.34,
+      "frame_idx": 80,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.26,
+          "bbox": [
+            222.6,
+            3.1,
+            250.8,
+            58.9
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            318.6,
+            227.8,
+            384.1,
+            272.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 1.674,
+      "frame_idx": 100,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.41,
+          "bbox": [
+            220.3,
+            1.7,
+            248.5,
+            57.4
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.35,
+          "bbox": [
+            318.5,
+            223.7,
+            380.6,
+            261.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 2.009,
+      "frame_idx": 120,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.29,
+          "bbox": [
+            315.5,
+            223.6,
+            382.7,
+            267.6
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            693.5,
+            54.1,
+            734.5,
+            187.7
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 2.344,
+      "frame_idx": 140,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.29,
+          "bbox": [
+            315.4,
+            219.4,
+            380.6,
+            262.6
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.2,
+          "bbox": [
+            691.8,
+            47.9,
+            731.1,
+            186.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 2.679,
+      "frame_idx": 160,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.34,
+          "bbox": [
+            313.4,
+            217.0,
+            378.0,
+            262.9
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            691.5,
+            50.7,
+            728.9,
+            178.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 3.014,
+      "frame_idx": 180,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            312.7,
+            218.7,
+            376.5,
+            263.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 3.349,
+      "frame_idx": 200,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.32,
+          "bbox": [
+            313.7,
+            219.5,
+            379.2,
+            264.3
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            693.2,
+            55.7,
+            729.0,
+            178.6
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            313.1,
+            218.5,
+            348.5,
+            274.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 3.684,
+      "frame_idx": 220,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            314.4,
+            218.3,
+            380.3,
+            263.3
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            692.3,
+            48.8,
+            733.1,
+            184.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 4.019,
+      "frame_idx": 240,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            317.1,
+            215.9,
+            384.8,
+            258.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 4.354,
+      "frame_idx": 260,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.33,
+          "bbox": [
+            319.4,
+            217.5,
+            387.2,
+            260.1
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.22,
+          "bbox": [
+            320.3,
+            216.1,
+            375.5,
+            269.0
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.2,
+          "bbox": [
+            703.0,
+            45.7,
+            739.8,
+            169.6
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 4.689,
+      "frame_idx": 280,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.34,
+          "bbox": [
+            319.2,
+            216.4,
+            386.7,
+            259.4
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.2,
+          "bbox": [
+            319.8,
+            216.1,
+            376.0,
+            269.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 5.023,
+      "frame_idx": 300,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            323.0,
+            214.9,
+            393.2,
+            255.0
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 5.358,
+      "frame_idx": 320,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.27,
+          "bbox": [
+            323.6,
+            214.5,
+            393.2,
+            254.8
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 5.693,
+      "frame_idx": 340,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.29,
+          "bbox": [
+            324.7,
+            214.5,
+            394.3,
+            253.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 6.028,
+      "frame_idx": 360,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.22,
+          "bbox": [
+            323.1,
+            212.4,
+            393.3,
+            253.0
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 6.363,
+      "frame_idx": 380,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            712.2,
+            30.6,
+            753.0,
+            167.1
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 6.698,
+      "frame_idx": 400,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.21,
+          "bbox": [
+            714.0,
+            28.7,
+            754.3,
+            166.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 7.033,
+      "frame_idx": 420,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            714.2,
+            27.8,
+            753.9,
+            167.5
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.18,
+          "bbox": [
+            324.3,
+            204.7,
+            393.0,
+            243.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 7.368,
+      "frame_idx": 440,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.23,
+          "bbox": [
+            714.4,
+            27.4,
+            753.9,
+            167.6
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            325.6,
+            204.6,
+            393.9,
+            244.7
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 7.703,
+      "frame_idx": 460,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.28,
+          "bbox": [
+            325.6,
+            204.0,
+            392.8,
+            243.8
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 8.038,
+      "frame_idx": 480,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            329.5,
+            204.7,
+            394.4,
+            248.5
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 8.372,
+      "frame_idx": 500,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.26,
+          "bbox": [
+            331.6,
+            207.7,
+            395.8,
+            253.4
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.18,
+          "bbox": [
+            717.0,
+            36.5,
+            757.4,
+            171.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 8.707,
+      "frame_idx": 520,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            328.1,
+            212.5,
+            396.6,
+            255.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 9.042,
+      "frame_idx": 540,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            328.3,
+            212.8,
+            396.9,
+            254.7
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.2,
+          "bbox": [
+            714.2,
+            41.0,
+            753.0,
+            170.6
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 9.377,
+      "frame_idx": 560,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.28,
+          "bbox": [
+            325.2,
+            212.2,
+            395.1,
+            254.5
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 9.712,
+      "frame_idx": 580,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            323.7,
+            213.3,
+            393.9,
+            255.0
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 10.047,
+      "frame_idx": 600,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.28,
+          "bbox": [
+            322.3,
+            212.9,
+            394.4,
+            254.3
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.22,
+          "bbox": [
+            321.9,
+            212.2,
+            353.4,
+            266.1
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 10.382,
+      "frame_idx": 620,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.31,
+          "bbox": [
+            319.3,
+            212.6,
+            388.4,
+            255.1
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.21,
+          "bbox": [
+            222.3,
+            0.7,
+            248.5,
+            44.8
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.18,
+          "bbox": [
+            702.9,
+            43.6,
+            739.9,
+            163.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 10.717,
+      "frame_idx": 640,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.36,
+          "bbox": [
+            316.9,
+            212.8,
+            384.5,
+            255.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 11.052,
+      "frame_idx": 660,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.36,
+          "bbox": [
+            315.4,
+            213.3,
+            384.1,
+            256.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 11.386,
+      "frame_idx": 680,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.32,
+          "bbox": [
+            318.8,
+            212.2,
+            387.0,
+            254.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 11.721,
+      "frame_idx": 700,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.31,
+          "bbox": [
+            319.9,
+            210.8,
+            388.2,
+            252.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 12.056,
+      "frame_idx": 720,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.28,
+          "bbox": [
+            320.9,
+            210.5,
+            388.5,
+            252.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 12.391,
+      "frame_idx": 740,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.29,
+          "bbox": [
+            321.4,
+            209.7,
+            389.5,
+            252.1
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 12.726,
+      "frame_idx": 760,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.34,
+          "bbox": [
+            321.5,
+            210.5,
+            388.3,
+            253.8
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 13.061,
+      "frame_idx": 780,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.31,
+          "bbox": [
+            318.6,
+            209.0,
+            385.2,
+            251.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 13.396,
+      "frame_idx": 800,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.38,
+          "bbox": [
+            314.2,
+            209.7,
+            381.4,
+            252.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 13.731,
+      "frame_idx": 820,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.26,
+          "bbox": [
+            309.0,
+            211.3,
+            376.7,
+            254.0
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.21,
+          "bbox": [
+            691.6,
+            33.3,
+            731.8,
+            167.1
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 14.066,
+      "frame_idx": 840,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.29,
+          "bbox": [
+            311.9,
+            208.8,
+            378.0,
+            251.1
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 14.401,
+      "frame_idx": 860,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.31,
+          "bbox": [
+            314.3,
+            209.2,
+            379.8,
+            250.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 14.735,
+      "frame_idx": 880,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.32,
+          "bbox": [
+            314.5,
+            208.7,
+            380.2,
+            251.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 15.07,
+      "frame_idx": 900,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.24,
+          "bbox": [
+            314.1,
+            207.0,
+            381.5,
+            248.7
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.21,
+          "bbox": [
+            702.6,
+            21.5,
+            740.9,
+            158.7
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 15.405,
+      "frame_idx": 920,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.21,
+          "bbox": [
+            313.7,
+            207.4,
+            380.0,
+            248.2
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.21,
+          "bbox": [
+            701.2,
+            17.3,
+            740.4,
+            159.7
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 15.74,
+      "frame_idx": 940,
+      "persons": [],
+      "shelf_voids": [],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 16.075,
+      "frame_idx": 960,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.3,
+          "bbox": [
+            698.7,
+            14.0,
+            739.5,
+            156.7
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.29,
+          "bbox": [
+            311.1,
+            204.7,
+            377.5,
+            247.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 16.41,
+      "frame_idx": 980,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.31,
+          "bbox": [
+            311.1,
+            204.2,
+            377.7,
+            245.6
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.29,
+          "bbox": [
+            701.4,
+            18.0,
+            741.1,
+            154.7
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.2,
+          "bbox": [
+            311.1,
+            202.7,
+            362.1,
+            242.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 16.745,
+      "frame_idx": 1000,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.33,
+          "bbox": [
+            313.8,
+            203.5,
+            380.6,
+            243.5
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.27,
+          "bbox": [
+            702.7,
+            13.2,
+            742.0,
+            150.5
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 17.08,
+      "frame_idx": 1020,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            316.9,
+            203.3,
+            384.4,
+            244.0
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            703.4,
+            9.7,
+            744.7,
+            131.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 17.415,
+      "frame_idx": 1040,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.26,
+          "bbox": [
+            319.3,
+            203.5,
+            386.7,
+            244.2
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            706.7,
+            10.0,
+            748.1,
+            150.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 17.749,
+      "frame_idx": 1060,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.35,
+          "bbox": [
+            713.9,
+            10.5,
+            752.5,
+            149.1
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.27,
+          "bbox": [
+            322.2,
+            201.5,
+            390.2,
+            244.6
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 18.084,
+      "frame_idx": 1080,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.32,
+          "bbox": [
+            714.6,
+            9.9,
+            753.1,
+            145.3
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.24,
+          "bbox": [
+            324.0,
+            201.0,
+            393.1,
+            243.5
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 18.419,
+      "frame_idx": 1100,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.28,
+          "bbox": [
+            325.4,
+            199.4,
+            394.5,
+            244.2
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            714.5,
+            7.6,
+            754.6,
+            145.1
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 18.754,
+      "frame_idx": 1120,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            714.3,
+            7.7,
+            756.2,
+            144.8
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            326.3,
+            199.7,
+            395.9,
+            244.1
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 19.089,
+      "frame_idx": 1140,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.23,
+          "bbox": [
+            717.5,
+            7.2,
+            759.9,
+            145.8
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.21,
+          "bbox": [
+            330.3,
+            198.2,
+            397.0,
+            244.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 19.424,
+      "frame_idx": 1160,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.35,
+          "bbox": [
+            723.6,
+            8.4,
+            763.6,
+            147.6
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.32,
+          "bbox": [
+            334.4,
+            198.2,
+            399.9,
+            244.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 19.759,
+      "frame_idx": 1180,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.35,
+          "bbox": [
+            724.5,
+            7.3,
+            765.6,
+            146.8
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.25,
+          "bbox": [
+            334.8,
+            197.9,
+            402.4,
+            242.0
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 20.094,
+      "frame_idx": 1200,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.39,
+          "bbox": [
+            724.1,
+            6.7,
+            763.8,
+            147.0
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.24,
+          "bbox": [
+            335.1,
+            196.0,
+            400.0,
+            240.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 20.429,
+      "frame_idx": 1220,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.37,
+          "bbox": [
+            723.5,
+            5.1,
+            762.6,
+            136.2
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.24,
+          "bbox": [
+            333.7,
+            196.1,
+            398.6,
+            240.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 20.764,
+      "frame_idx": 1240,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.38,
+          "bbox": [
+            724.0,
+            4.4,
+            763.6,
+            139.4
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.28,
+          "bbox": [
+            333.1,
+            195.6,
+            399.1,
+            239.5
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.19,
+          "bbox": [
+            332.3,
+            195.2,
+            365.4,
+            250.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 21.098,
+      "frame_idx": 1260,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.49,
+          "bbox": [
+            723.4,
+            3.7,
+            765.0,
+            136.2
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.18,
+          "bbox": [
+            330.9,
+            194.0,
+            398.0,
+            233.0
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 21.433,
+      "frame_idx": 1280,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.53,
+          "bbox": [
+            722.9,
+            2.7,
+            767.3,
+            133.5
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.2,
+          "bbox": [
+            331.0,
+            190.6,
+            398.2,
+            232.4
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 21.768,
+      "frame_idx": 1300,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.49,
+          "bbox": [
+            722.2,
+            2.0,
+            765.0,
+            130.0
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.2,
+          "bbox": [
+            331.6,
+            187.2,
+            397.6,
+            232.2
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 22.103,
+      "frame_idx": 1320,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.39,
+          "bbox": [
+            714.0,
+            3.3,
+            760.3,
+            127.4
+          ]
+        },
+        {
+          "class": "shelf_void",
+          "confidence": 0.2,
+          "bbox": [
+            326.9,
+            188.4,
+            395.3,
+            232.3
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 22.438,
+      "frame_idx": 1340,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.43,
+          "bbox": [
+            711.8,
+            3.1,
+            756.3,
+            125.9
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    },
+    {
+      "t": 22.773,
+      "frame_idx": 1360,
+      "persons": [],
+      "shelf_voids": [
+        {
+          "class": "shelf_void",
+          "confidence": 0.42,
+          "bbox": [
+            707.7,
+            3.2,
+            752.4,
+            132.0
+          ]
+        }
+      ],
+      "occupancy": 0,
+      "queue_length": 0
+    }
+  ]
+}

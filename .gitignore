@@ -45,6 +45,7 @@ runs/
 # Video files and datasets
 *.mp4
 !frontend/public/demo/supermarket-simulation.mp4
+!frontend/public/real-world/*.mp4
 *.avi
 *.mkv
 *.mov

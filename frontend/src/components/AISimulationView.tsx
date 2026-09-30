@@ -426,7 +426,7 @@ export const AISimulationView: React.FC = () => {
                       height: `${height}%`,
                     }}
                   >
-                    <span className="absolute -top-3.5 left-0 text-[8px] font-mono font-medium text-emerald-300 bg-black/90 px-1 py-0.2 rounded-xs whitespace-nowrap border border-emerald-500/40">
+                    <span className="absolute -top-3.5 left-0 text-[8px]  font-medium text-emerald-300 bg-black/90 px-1 py-0.2 rounded-xs whitespace-nowrap border border-emerald-500/40">
                       PERSON · ID {det.track_id} · {det.confidence.toFixed(2)}
                     </span>
                   </div>
@@ -435,14 +435,14 @@ export const AISimulationView: React.FC = () => {
 
               {/* Simulated Zone Overlay (Clearly labeled as operational reference) */}
               <div className="absolute bottom-4 right-4 w-40 h-24 border border-dashed border-amber-400/60 bg-amber-400/5 rounded pointer-events-none flex items-start justify-end p-1">
-                <span className="text-[8px] font-mono text-amber-300 bg-black/80 px-1 py-0.5 rounded border border-amber-500/30">
+                <span className="text-[8px]  text-amber-300 bg-black/80 px-1 py-0.5 rounded border border-amber-500/30">
                   SIMULATED CHECKOUT ZONE
                 </span>
               </div>
 
               {/* Pipeline Status Watermark */}
               <div className="absolute bottom-2 left-2 z-10 flex items-center gap-1.5">
-                <span className="text-[9.5px] font-mono text-slate-300 bg-black/75 backdrop-blur-xs px-2 py-0.5 rounded border border-slate-700/60">
+                <span className="text-[9.5px]  text-slate-300 bg-black/75 backdrop-blur-xs px-2 py-0.5 rounded border border-slate-700/60">
                   YOLO11n + ByteTrack · {activeDetections.length} Persons Detected
                 </span>
               </div>

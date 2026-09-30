@@ -1,0 +1,455 @@
+{
+  "store_id": "DMART-GN-02",
+  "store_name": "DMart Beta 2 \u00b7 Greater Noida",
+  "brand": "DMart Beta 2",
+  "total_cameras": 7,
+  "cameras": [
+    {
+      "id": "CAM-01",
+      "name": "Camera 01",
+      "zone": "",
+      "type": "entrance",
+      "shelf_id": null,
+      "video_url": "/real-world/cam1.mp4",
+      "detections_url": "/real-world/cam1_detections.json",
+      "duration": 31.52,
+      "resolution": "848x478",
+      "fps": 59.9,
+      "summary": {
+        "peak_occupancy": 1,
+        "peak_queue": 0,
+        "entries": 0,
+        "exits": 0,
+        "avg_voids": 0,
+        "status": "ONLINE"
+      },
+      "roi_config": {
+        "entrance_line": [
+          [
+            120,
+            360
+          ],
+          [
+            740,
+            360
+          ]
+        ],
+        "checkout_roi": null
+      }
+    },
+    {
+      "id": "CAM-02",
+      "name": "Camera 02",
+      "zone": "",
+      "type": "shelf",
+      "shelf_id": "sh-01",
+      "video_url": "/real-world/cam2.mp4",
+      "detections_url": "/real-world/cam2_detections.json",
+      "duration": 22.98,
+      "resolution": "848x478",
+      "fps": 59.7,
+      "summary": {
+        "peak_occupancy": 0,
+        "peak_queue": 0,
+        "entries": 0,
+        "exits": 0,
+        "avg_voids": 1.6,
+        "status": "ONLINE"
+      },
+      "roi_config": {
+        "entrance_line": null,
+        "checkout_roi": null
+      }
+    },
+    {
+      "id": "CAM-03",
+      "name": "Camera 03",
+      "zone": "",
+      "type": "shelf",
+      "shelf_id": "sh-02",
+      "video_url": "/real-world/cam3.mp4",
+      "detections_url": "/real-world/cam3_detections.json",
+      "duration": 22.51,
+      "resolution": "848x478",
+      "fps": 59.7,
+      "summary": {
+        "peak_occupancy": 0,
+        "peak_queue": 0,
+        "entries": 0,
+        "exits": 0,
+        "avg_voids": 1.0,
+        "status": "ONLINE"
+      },
+      "roi_config": {
+        "entrance_line": null,
+        "checkout_roi": null
+      }
+    },
+    {
+      "id": "CAM-04",
+      "name": "Camera 04",
+      "zone": "",
+      "type": "shelf",
+      "shelf_id": "sh-03",
+      "video_url": "/real-world/cam4.mp4",
+      "detections_url": "/real-world/cam4_detections.json",
+      "duration": 18.8,
+      "resolution": "848x478",
+      "fps": 59.8,
+      "summary": {
+        "peak_occupancy": 1,
+        "peak_queue": 0,
+        "entries": 0,
+        "exits": 0,
+        "avg_voids": 1.4,
+        "status": "ONLINE"
+      },
+      "roi_config": {
+        "entrance_line": null,
+        "checkout_roi": null
+      }
+    },
+    {
+      "id": "CAM-05",
+      "name": "Camera 05",
+      "zone": "",
+      "type": "checkout",
+      "shelf_id": null,
+      "video_url": "/real-world/cam5.mp4",
+      "detections_url": "/real-world/cam5_detections.json",
+      "duration": 9.07,
+      "resolution": "848x478",
+      "fps": 59.3,
+      "summary": {
+        "peak_occupancy": 1,
+        "peak_queue": 1,
+        "entries": 0,
+        "exits": 0,
+        "avg_voids": 0,
+        "status": "ONLINE"
+      },
+      "roi_config": {
+        "entrance_line": null,
+        "checkout_roi": [
+          [
+            200,
+            180
+          ],
+          [
+            780,
+            180
+          ],
+          [
+            800,
+            460
+          ],
+          [
+            180,
+            460
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CAM-06",
+      "name": "Camera 06",
+      "zone": "",
+      "type": "queue",
+      "shelf_id": null,
+      "video_url": "/real-world/cam6.mp4",
+      "detections_url": "/real-world/cam6_detections.json",
+      "duration": 7.13,
+      "resolution": "848x478",
+      "fps": 59.2,
+      "summary": {
+        "peak_occupancy": 1,
+        "peak_queue": 0,
+        "entries": 0,
+        "exits": 0,
+        "avg_voids": 0,
+        "status": "ONLINE"
+      },
+      "roi_config": {
+        "entrance_line": null,
+        "checkout_roi": [
+          [
+            160,
+            160
+          ],
+          [
+            750,
+            160
+          ],
+          [
+            780,
+            460
+          ],
+          [
+            120,
+            460
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CAM-07",
+      "name": "Camera 07",
+      "zone": "",
+      "type": "exit",
+      "shelf_id": null,
+      "video_url": "/real-world/cam7.mp4",
+      "detections_url": "/real-world/cam7_detections.json",
+      "duration": 31.52,
+      "resolution": "848x478",
+      "fps": 59.9,
+      "summary": {
+        "peak_occupancy": 1,
+        "peak_queue": 0,
+        "entries": 0,
+        "exits": 1,
+        "avg_voids": 0,
+        "status": "ONLINE"
+      },
+      "roi_config": {
+        "entrance_line": [
+          [
+            140,
+            350
+          ],
+          [
+            760,
+            350
+          ]
+        ],
+        "checkout_roi": null
+      }
+    }
+  ],
+  "minute_timeline": [
+    {
+      "timestamp": "2026-09-30T13:20:00Z",
+      "time_label": "13:20",
+      "store_occupancy": 18,
+      "queue_length": 2,
+      "predicted_queue_5m": 3,
+      "arrival_rate": 2.1,
+      "service_rate": 2.0,
+      "estimated_wait_min": 1.0,
+      "shelf_availability_pct": 94.5,
+      "total_shelf_voids": 2,
+      "alert": null,
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:21:00Z",
+      "time_label": "13:21",
+      "store_occupancy": 22,
+      "queue_length": 3,
+      "predicted_queue_5m": 7,
+      "arrival_rate": 2.8,
+      "service_rate": 2.0,
+      "estimated_wait_min": 1.5,
+      "shelf_availability_pct": 93.0,
+      "total_shelf_voids": 3,
+      "alert": "DMart Turnstile: Footfall surge detected at Entrance (CAM-01)",
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:22:00Z",
+      "time_label": "13:22",
+      "store_occupancy": 25,
+      "queue_length": 4,
+      "predicted_queue_5m": 11,
+      "arrival_rate": 3.2,
+      "service_rate": 1.9,
+      "estimated_wait_min": 2.11,
+      "shelf_availability_pct": 91.2,
+      "total_shelf_voids": 4,
+      "alert": null,
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:23:00Z",
+      "time_label": "13:23",
+      "store_occupancy": 29,
+      "queue_length": 5,
+      "predicted_queue_5m": 12,
+      "arrival_rate": 3.6,
+      "service_rate": 2.1,
+      "estimated_wait_min": 2.38,
+      "shelf_availability_pct": 88.0,
+      "total_shelf_voids": 5,
+      "alert": "Queue threshold reached on CAM-06 (5 people detected)",
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:24:00Z",
+      "time_label": "13:24",
+      "store_occupancy": 31,
+      "queue_length": 6,
+      "predicted_queue_5m": 16,
+      "arrival_rate": 3.9,
+      "service_rate": 2.0,
+      "estimated_wait_min": 3.0,
+      "shelf_availability_pct": 85.5,
+      "total_shelf_voids": 6,
+      "alert": "Little's Law Alert: Projected queue 9 in 5 mins on CAM-06 -> Open Counter 2",
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:25:00Z",
+      "time_label": "13:25",
+      "store_occupancy": 34,
+      "queue_length": 7,
+      "predicted_queue_5m": 16,
+      "arrival_rate": 4.1,
+      "service_rate": 2.2,
+      "estimated_wait_min": 3.18,
+      "shelf_availability_pct": 82.0,
+      "total_shelf_voids": 7,
+      "alert": "Queue threshold reached on CAM-06 (5 people detected)",
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:26:00Z",
+      "time_label": "13:26",
+      "store_occupancy": 35,
+      "queue_length": 6,
+      "predicted_queue_5m": 5,
+      "arrival_rate": 3.5,
+      "service_rate": 3.8,
+      "estimated_wait_min": 1.58,
+      "shelf_availability_pct": 80.4,
+      "total_shelf_voids": 8,
+      "alert": "Shelf void gap detected on CAM-02 (Stock level dropped below 20%)",
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:27:00Z",
+      "time_label": "13:27",
+      "store_occupancy": 33,
+      "queue_length": 5,
+      "predicted_queue_5m": 0,
+      "arrival_rate": 2.9,
+      "service_rate": 3.9,
+      "estimated_wait_min": 1.28,
+      "shelf_availability_pct": 78.1,
+      "total_shelf_voids": 9,
+      "alert": "DMart Associate Dispatched: Restock Aisle 01 & 02 FMCG products",
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:28:00Z",
+      "time_label": "13:28",
+      "store_occupancy": 30,
+      "queue_length": 4,
+      "predicted_queue_5m": 0,
+      "arrival_rate": 2.4,
+      "service_rate": 3.6,
+      "estimated_wait_min": 1.11,
+      "shelf_availability_pct": 79.5,
+      "total_shelf_voids": 8,
+      "alert": null,
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:29:00Z",
+      "time_label": "13:29",
+      "store_occupancy": 28,
+      "queue_length": 3,
+      "predicted_queue_5m": 0,
+      "arrival_rate": 2.1,
+      "service_rate": 3.2,
+      "estimated_wait_min": 0.94,
+      "shelf_availability_pct": 84.0,
+      "total_shelf_voids": 6,
+      "alert": "Bottleneck Resolved: Avg queue wait time reduced to 1.8 mins",
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:30:00Z",
+      "time_label": "13:30",
+      "store_occupancy": 26,
+      "queue_length": 3,
+      "predicted_queue_5m": 0,
+      "arrival_rate": 2.0,
+      "service_rate": 2.8,
+      "estimated_wait_min": 1.07,
+      "shelf_availability_pct": 86.2,
+      "total_shelf_voids": 5,
+      "alert": null,
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:31:00Z",
+      "time_label": "13:31",
+      "store_occupancy": 24,
+      "queue_length": 2,
+      "predicted_queue_5m": 0,
+      "arrival_rate": 1.8,
+      "service_rate": 2.5,
+      "estimated_wait_min": 0.8,
+      "shelf_availability_pct": 89.0,
+      "total_shelf_voids": 4,
+      "alert": null,
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:32:00Z",
+      "time_label": "13:32",
+      "store_occupancy": 23,
+      "queue_length": 2,
+      "predicted_queue_5m": 0,
+      "arrival_rate": 1.7,
+      "service_rate": 2.2,
+      "estimated_wait_min": 0.91,
+      "shelf_availability_pct": 91.5,
+      "total_shelf_voids": 3,
+      "alert": "Restock verified on CAM-04: Shelf void cleared",
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:33:00Z",
+      "time_label": "13:33",
+      "store_occupancy": 21,
+      "queue_length": 1,
+      "predicted_queue_5m": 0,
+      "arrival_rate": 1.5,
+      "service_rate": 2.0,
+      "estimated_wait_min": 0.5,
+      "shelf_availability_pct": 93.0,
+      "total_shelf_voids": 2,
+      "alert": null,
+      "cameras_active": 7,
+      "cameras_total": 7
+    },
+    {
+      "timestamp": "2026-09-30T13:34:00Z",
+      "time_label": "13:34",
+      "store_occupancy": 20,
+      "queue_length": 1,
+      "predicted_queue_5m": 0,
+      "arrival_rate": 1.4,
+      "service_rate": 1.9,
+      "estimated_wait_min": 0.53,
+      "shelf_availability_pct": 94.8,
+      "total_shelf_voids": 1,
+      "alert": "All 7 DMart Beta 2 camera channels nominal. Store occupancy balanced.",
+      "cameras_active": 7,
+      "cameras_total": 7
+    }
+  ]
+}

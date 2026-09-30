@@ -1,0 +1,508 @@
+{
+  "camera_id": "CAM-06",
+  "name": "Camera 06",
+  "zone": "",
+  "type": "queue",
+  "shelf_id": null,
+  "video_url": "/real-world/cam6.mp4",
+  "resolution": {
+    "width": 848,
+    "height": 478
+  },
+  "native_fps": 59.2,
+  "duration": 7.12,
+  "sample_fps": 3.0,
+  "roi_config": {
+    "entrance_line": null,
+    "checkout_roi": [
+      [
+        160,
+        160
+      ],
+      [
+        750,
+        160
+      ],
+      [
+        780,
+        460
+      ],
+      [
+        120,
+        460
+      ]
+    ]
+  },
+  "summary": {
+    "peak_occupancy": 1,
+    "peak_queue": 0,
+    "entries": 0,
+    "exits": 0,
+    "avg_voids": 0,
+    "status": "ONLINE"
+  },
+  "frames": [
+    {
+      "t": 0.0,
+      "frame_idx": 0,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.68,
+          "bbox": [
+            780.6,
+            268.4,
+            847.7,
+            460.7
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 0.338,
+      "frame_idx": 20,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.83,
+          "bbox": [
+            750.7,
+            193.5,
+            847.9,
+            454.3
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 0.675,
+      "frame_idx": 40,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.89,
+          "bbox": [
+            746.8,
+            186.9,
+            847.9,
+            446.6
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 1.013,
+      "frame_idx": 60,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.86,
+          "bbox": [
+            745.8,
+            183.8,
+            847.9,
+            439.8
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 1.35,
+      "frame_idx": 80,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.9,
+          "bbox": [
+            733.5,
+            188.9,
+            847.4,
+            429.9
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 1.688,
+      "frame_idx": 100,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.76,
+          "bbox": [
+            732.8,
+            209.1,
+            847.4,
+            428.5
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 2.025,
+      "frame_idx": 120,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.68,
+          "bbox": [
+            732.9,
+            213.9,
+            847.0,
+            428.3
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 2.363,
+      "frame_idx": 140,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.83,
+          "bbox": [
+            733.2,
+            194.1,
+            847.6,
+            427.3
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 2.701,
+      "frame_idx": 160,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.88,
+          "bbox": [
+            733.3,
+            174.1,
+            844.3,
+            427.4
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 3.038,
+      "frame_idx": 180,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.86,
+          "bbox": [
+            734.4,
+            180.4,
+            839.6,
+            426.5
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 3.376,
+      "frame_idx": 200,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.82,
+          "bbox": [
+            736.0,
+            173.5,
+            836.2,
+            425.7
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 3.713,
+      "frame_idx": 220,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.85,
+          "bbox": [
+            740.9,
+            170.0,
+            834.8,
+            424.9
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 4.051,
+      "frame_idx": 240,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.86,
+          "bbox": [
+            741.1,
+            169.0,
+            829.4,
+            425.2
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 4.388,
+      "frame_idx": 260,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.86,
+          "bbox": [
+            740.1,
+            168.7,
+            829.8,
+            425.3
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 4.726,
+      "frame_idx": 280,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.86,
+          "bbox": [
+            739.6,
+            170.7,
+            831.7,
+            426.0
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 5.064,
+      "frame_idx": 300,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.83,
+          "bbox": [
+            733.0,
+            173.5,
+            819.9,
+            426.2
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 5.401,
+      "frame_idx": 320,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.72,
+          "bbox": [
+            732.0,
+            173.4,
+            819.4,
+            426.1
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 5.739,
+      "frame_idx": 340,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.79,
+          "bbox": [
+            733.1,
+            191.4,
+            818.8,
+            426.6
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 6.076,
+      "frame_idx": 360,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.74,
+          "bbox": [
+            727.5,
+            211.2,
+            827.9,
+            426.6
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 6.414,
+      "frame_idx": 380,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.84,
+          "bbox": [
+            727.9,
+            210.6,
+            835.7,
+            425.8
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 6.751,
+      "frame_idx": 400,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.8,
+          "bbox": [
+            728.4,
+            208.9,
+            844.4,
+            425.3
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    },
+    {
+      "t": 7.089,
+      "frame_idx": 420,
+      "persons": [
+        {
+          "track_id": 1,
+          "class": "person",
+          "confidence": 0.66,
+          "bbox": [
+            725.4,
+            213.4,
+            847.7,
+            425.9
+          ],
+          "in_queue": false
+        }
+      ],
+      "shelf_voids": [],
+      "occupancy": 1,
+      "queue_length": 0
+    }
+  ]
+}
